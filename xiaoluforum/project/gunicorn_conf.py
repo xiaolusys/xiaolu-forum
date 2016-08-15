@@ -4,7 +4,7 @@
 
 import multiprocessing
 
-workers = 3
+workers = 2
 bind = "0.0.0.0:9001"
 
 timeout = 20
