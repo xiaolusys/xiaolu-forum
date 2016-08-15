@@ -21,7 +21,7 @@ ADMINS = (('denghui', 'hlkysf@163.com'),)
 SECRET_KEY = 'HicISfd7IEnvyPMOm4fQnvwLK5sreDl0wuS4DAA7ZJ8oZAitF8'
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['.xiaolumm.com', ]
+ALLOWED_HOSTS = ['.xiaolumm.com', '.xiaolumeimei.com']
 
 # You can change this to something like 'MyForum <noreply@example.com>'
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'  # Django default
