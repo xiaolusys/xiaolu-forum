@@ -14,14 +14,14 @@ from .base import *
 DEBUG = False
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = (('John', 'john@example.com'), )
+ADMINS = (('denghui', 'hlkysf@163.com'),)
 
 # Secret key generator: https://djskgen.herokuapp.com/
 # You should set your key as an environ variable
-SECRET_KEY = os.environ.get("SECRET_KEY", "")
+SECRET_KEY = 'HicISfd7IEnvyPMOm4fQnvwLK5sreDl0wuS4DAA7ZJ8oZAitF8'
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['.example.com', ]
+ALLOWED_HOSTS = ['.xiaolumm.com', ]
 
 # You can change this to something like 'MyForum <noreply@example.com>'
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'  # Django default
@@ -36,15 +36,13 @@ INSTALLED_APPS.extend([
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mydatabase',
-        'USER': 'mydatabaseuser',
-        'PASSWORD': 'mypassword',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-        # Django default is 0,
-        # close after every request
-        # 'CONN_MAX_AGE': 0,  # todo: Spirit v0.5 change to Keep alive 60 secs, uncomment
+        'ENGINE': 'django.db.backends.mysql',
+    # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'xiaoluforum',  # Or path to database file if using sqlite3.
+        'USER': 'root',  # Not used with sqlite3.\
+        'PASSWORD': '139cnm',  # Not used with sqlite3.
+        'HOST': '127.0.0.1',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',  # Set to empty string for default. Not used with sqlite3.
     }
 }
 
