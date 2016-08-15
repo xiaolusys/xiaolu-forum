@@ -4,7 +4,7 @@ build:
     - TARGET=staging
   commands:
     - mkdir -p /data/log/django
-    - python manage.py migrate --noinput
+    - cd xiaoluforum; python manage.py migrate --noinput
     #- python manage.py test -t . --keepdb
   when:
     branch: [staging]
