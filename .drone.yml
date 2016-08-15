@@ -4,7 +4,7 @@ build:
     - TARGET=staging
   commands:
     - mkdir -p /data/log/django
-    #- cd xiaoluform;python manage.py migrate --noinput
+    - cd xiaoluform;python manage.py migrate --noinput
     #- python manage.py test -t . --keepdb
   when:
     branch: [staging]
