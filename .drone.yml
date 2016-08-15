@@ -1,0 +1,42 @@
+build:
+  image: registry.aliyuncs.com/xiaolu-img/xiaolusys-base:forum
+  environment:
+    - TARGET=staging
+  commands:
+    - mkdir -p /data/log/django
+    #- cd xiaoluform;python manage.py migrate --noinput
+    #- python manage.py test -t . --keepdb
+  when:
+    branch: [staging]
+publish:
+  docker:
+    username: $$DOCKER_USERNAME
+    password: $$DOCKER_PASSWORD
+    email: $$DOCKER_EMAIL
+    registry: registry.aliyuncs.com
+    repo: xiaolu-img/xiaolusys
+    tag: forum
+    file: Dockerfile
+    mirror: https://n5fb0zgg.mirror.aliyuncs.com
+    when:
+      branch: staging
+deploy:
+  ssh:
+    host: staging.xiaolumm.com
+    user: root
+    when:
+      branch: staging
+    commands:
+      - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys:forum      
+      - docker rm -f gunicorn 
+      - docker run --name=gunicorn-forum --restart=always -e TARGET=staging --volumes-from=static -d -p `ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`:9000:9000 -e BLUEWARE_CONFIG_FILE=blueware.ini registry.aliyuncs.com/xiaolu-img/xiaolusys:forum blueware-admin run-program gunicorn -k gevent -c project/gunicorn_conf.py project.wsgi
+  ssh:
+    host:
+      - sale2.xiaolumm.com
+    user: root
+    when:
+      branch: master
+    commands:
+      - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys:forum
+      - docker rm -f gunicorn
+      - docker run --name=gunicorn-forum --restart=always -e TARGET=production --volumes-from=static -d -p `ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`:9000:9000 -e BLUEWARE_CONFIG_FILE=blueware.ini registry.aliyuncs.com/xiaolu-img/xiaolusys:forum blueware-admin run-program gunicorn -k gevent -c project/gunicorn_conf.py project.wsgi

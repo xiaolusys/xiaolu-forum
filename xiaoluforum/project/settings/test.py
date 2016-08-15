@@ -10,6 +10,9 @@ from __future__ import unicode_literals
 
 from .base import *
 
+
+DEBUG = True
+
 SECRET_KEY = "TEST"
 
 INSTALLED_APPS.extend([

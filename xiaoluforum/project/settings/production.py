@@ -39,10 +39,13 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
     # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'xiaoluforum',  # Or path to database file if using sqlite3.
-        'USER': 'root',  # Not used with sqlite3.\
-        'PASSWORD': '139cnm',  # Not used with sqlite3.
-        'HOST': '127.0.0.1',  # Set to empty string for localhost. Not used with sqlite3.
+        'USER': 'xiaolufba',  # Not used with sqlite3.
+        'PASSWORD': 'Xiaolu_2016forum',  # Not used with sqlite3.
+        'HOST': 'rdsvrl2p9pu6536n7d99.mysql.rds.aliyuncs.com',
+    # Set to empty string for localhost. Not used with sqlite3. #192.168.0.28
         'PORT': '3306',  # Set to empty string for default. Not used with sqlite3.
+        'OPTIONS': {'init_command': 'SET storage_engine=Innodb;',
+                    'charset': 'utf8'},  # storage_engine need mysql>5.4,and table_type need mysql<5.4
     }
 }
 
