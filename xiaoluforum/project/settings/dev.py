@@ -12,7 +12,7 @@ from __future__ import unicode_literals
 from .base import *
 
 
-DEBUG = False
+DEBUG = True
 
 TEMPLATES[0]['OPTIONS']['debug'] = False
 # TEMPLATES[0]['OPTIONS']['string_if_invalid'] = '{{ %s }}'  # Some Django templates relies on this being the default
@@ -41,8 +41,8 @@ DATABASES = {
         'NAME': 'xiaoluforum',  # Or path to database file if using sqlite3.
         'USER': 'xiaolufdev',  # Not used with sqlite3.\
         'PASSWORD': 'Xiaolu_test123',  # Not used with sqlite3.
-        'HOST': 'rm-bp17ea269uu21f9i1.mysql.rds.aliyuncs.com',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '3306',  # Set to empty string for default. Not used with sqlite3.
+        'HOST': 'dev.xiaolumm.com',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '30001',  # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'init_command': 'SET storage_engine=Innodb;',
                     'charset': 'utf8'},  # storage_engine need mysql>5.4,and table_type need mysql<5.4
         'TEST': {
