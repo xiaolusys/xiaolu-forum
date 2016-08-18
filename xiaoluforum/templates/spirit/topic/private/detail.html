@@ -1,0 +1,81 @@
+{% extends "spirit/_base.html" %}
+
+{% load spirit_tags i18n %}
+
+{% block title %}{{ topic.title }}{% endblock %}
+
+{% load spirit_tags i18n socialaccount %}
+{% get_social_accounts user as accounts %}
+
+{% block content %}
+
+        <ul class="nav">
+            <li><a href="{% url "spirit:topic:private:index" %}" >{% trans "Private topics" %}</a></li>
+        </ul>
+
+        <h1 class="headline">{{ topic.title }}</h1>
+
+        <div class="container">
+            <div class="private-participants js-tabs-container">
+                <a class="dropdown-button js-tab" href="#" data-related=".js-participants-content">{% trans "Participants" %} <i class="fa fa-chevron-down"></i></a>
+
+                <div class="tab-content js-tab-content js-participants-content">
+                    <ul class="participants-menu">
+                        {% for tp in topic.topics_private.all %}
+                            <li class="menu-item"><span class="menu-username">{{ tp.user.username }}</span>{% ifequal user.pk topic.user.pk %}<a class="menu-icon" href="{% url "spirit:topic:private:access-remove" tp.pk %}" ><i class="fa fa-times"></i></a>{% endifequal %}</li>
+                        {% endfor %}
+                    </ul>
+
+                    {% ifequal user.pk topic.user.pk %}
+                        {% render_invite_form topic %}
+                    {% endifequal %}
+                </div>
+            </div>
+
+            <div class="private-leave">
+                <a class="button" href="{% url "spirit:topic:private:access-remove" topic_private.pk %}" ><i class="fa fa-times"></i>{% trans "Leave topic" %}</a>
+            </div>
+        </div>
+
+        {% include "spirit/comment/_render_list.html" %}
+
+        {# this can be *included* here and in topic_detail #}
+        <div class="container">
+            {% render_paginator comments %}
+
+            <div class="notify">
+                {% render_notification_form user=user topic=topic %}
+            </div>
+        </div>
+
+        <div id="reply" class="reply">
+
+            <div class="comment-media">
+                <div class="comment-img">
+                                {% if accounts.xlmm.0.get_avatar_url %}
+                                        <img class="comment-avatar" src={{ accounts.xlmm.0.get_avatar_url }} />
+                                {% else %}
+                                        <img class="comment-avatar" src="http://wx.qlogo.cn/mmopen/n24ek7Oc1iaXyxqzHobN7BicG5W1ljszSRWSdzaFeRkGGVwqjmQKTmicTylm8IkclpgDiaamWqZtiaTlcvLJ5z6x35wCKMWVbcYPU/0" />
+                                {% endif %}
+                </div>
+
+                <div class="comment-body">
+                    {% render_comments_form topic=topic %}
+                </div>
+            </div>
+
+        </div>
+
+            <script>
+                $( document ).ready(function() {
+
+                    $( ".comment" ).bookmark( {
+                        csrfToken: "{{ csrf_token }}",
+                        target: "{% url "spirit:comment:bookmark:create" topic.pk %}",
+                    } );
+
+                });
+            </script>
+
+
+{% endblock %}
