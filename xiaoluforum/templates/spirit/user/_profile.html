@@ -4,7 +4,7 @@
 
     <div class="profile-img">
 {% if accounts.xlmm.0.get_avatar_url %}
-		<img class="profile-avatar" src="{{ accounts.xlmm.0.get_avatar_url }}" />
+		<img class="profile-avatar" src={{ accounts.xlmm.0.get_avatar_url }} />
 {% else %}
 		<img class="profile-avatar" src="http://wx.qlogo.cn/mmopen/n24ek7Oc1iaXyxqzHobN7BicG5W1ljszSRWSdzaFeRkGGVwqjmQKTmicTylm8IkclpgDiaamWqZtiaTlcvLJ5z6x35wCKMWVbcYPU/0" />
 {% endif %}
@@ -32,9 +32,10 @@
 	</div>
 
     {% ifequal user.username p_user.username %}
-        <div class="profile-preferences">
-            <a class="button" href="{% url "spirit:user:update" %}"><i class="fa fa-cog"></i> {% trans "Preferences" %}</a>
-        </div>
+        <!--<div class="profile-preferences">-->
+            <!--<a class="button" href="{% url "spirit:user:update" %}"><i class="fa fa-cog"></i> {% trans "Preferences" %}</a>-->
+        <!--</div>-->
+        <!--删除个人设置按钮-->
     {% else %}
         <div class="private-message">
             <a class="button" href="{% url "spirit:topic:private:publish" user_id=p_user.pk %}"><i class="fa fa-envelope"></i> {% trans "Private Message" %}</a>

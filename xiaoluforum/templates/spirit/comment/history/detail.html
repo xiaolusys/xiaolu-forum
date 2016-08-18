@@ -1,0 +1,69 @@
+{% extends "spirit/_base.html" %}
+
+{% load spirit_tags i18n %}
+
+{% block title %}{% trans "Comment history" %}{% endblock %}
+
+{% block content %}
+
+{% load spirit_tags i18n socialaccount %}
+{% get_social_accounts user as accounts %}
+
+    {# todo: add nav bar #}
+
+    <h1 class="headline">{% trans "Comment history" %}</h1>
+
+    <div class="comments">
+
+        {% for c in comments %}
+            <div class="comment">
+
+                <div class="comment-media">
+                    <div class="comment-img">
+                                {% if accounts.xlmm.0.get_avatar_url %}
+                                        <img class="comment-avatar" src={{ accounts.xlmm.0.get_avatar_url }} />
+                                {% else %}
+                                        <img class="comment-avatar" src="http://wx.qlogo.cn/mmopen/n24ek7Oc1iaXyxqzHobN7BicG5W1ljszSRWSdzaFeRkGGVwqjmQKTmicTylm8IkclpgDiaamWqZtiaTlcvLJ5z6x35wCKMWVbcYPU/0" />
+                                {% endif %}
+                    </div>
+
+                    <div class="comment-body">
+                        <div class="comment-info">
+
+                            <div class="comment-username">
+                                <a href="{{ c.comment_fk.user.st.get_absolute_url }}">{{ c.comment_fk.user.username }}</a>
+                            </div>
+
+                            <ul class="comment-date">
+                                <li title="{{ c.date }}">{{ c.date|shortnaturaltime }}</li>
+                            </ul>
+
+                        </div>
+
+                        <div class="comment-text">
+                            {{ c.comment_html|safe }}
+                        </div>
+                    </div>
+                </div>
+
+			</div>
+        {% endfor %}
+
+    </div>
+
+    {% render_paginator comments %}
+
+
+    <script>
+
+	$( document ).ready(function() {
+
+        hljs.initHighlightingOnLoad();
+
+        $('.comment-text').comment_diff();
+
+	});
+
+	</script>
+
+{% endblock %}

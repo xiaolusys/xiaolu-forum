@@ -1,0 +1,56 @@
+{% load spirit_tags i18n %}
+
+{% load spirit_tags i18n socialaccount %}
+{% get_social_accounts user as accounts %}
+    <div class="comments">
+
+        {% for c in comments %}
+
+            <div class="comment">
+
+                <div class="comment-media">
+                    <div class="comment-img">
+                            {% if accounts.xlmm.0.get_avatar_url %}
+                                    <img class="comment-avatar" src={{ accounts.xlmm.0.get_avatar_url }} />
+                            {% else %}
+                                    <img class="comment-avatar" src="http://wx.qlogo.cn/mmopen/n24ek7Oc1iaXyxqzHobN7BicG5W1ljszSRWSdzaFeRkGGVwqjmQKTmicTylm8IkclpgDiaamWqZtiaTlcvLJ5z6x35wCKMWVbcYPU/0" />
+                            {% endif %}
+                    </div>
+
+                    <div class="comment-body">
+                        <div class="comment-info">
+
+                            <div class="comment-username">
+                                <a href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a>
+                            </div>
+
+                            <ul class="comment-date">
+                                <li><a href="{{ c.get_absolute_url }}"><i class="fa fa-comments"></i> {{ c.topic.title }}</a></li><!--
+			                 --><li title="{{ c.date }}">{{ c.date|shortnaturaltime }}</li>
+                            </ul>
+
+                        </div>
+
+                        <div class="comment-text">
+                            {% post_render_comment comment=c %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% empty %}
+            <p>{% trans "There are no comments here, yet" %}</p>
+        {% endfor %}
+
+    </div>
+
+
+    <script>
+
+	$( document ).ready(function() {
+
+        hljs.initHighlightingOnLoad();
+
+	});
+
+	</script>
