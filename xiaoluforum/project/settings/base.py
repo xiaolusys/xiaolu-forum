@@ -9,7 +9,6 @@ import os
 import sys
 
 from spirit.settings import *
-
 # You may override or extend spirit settings below...
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

@@ -4,8 +4,8 @@
 
 import multiprocessing
 
-workers = 3
-bind = "0.0.0.0:9001"
+workers = 2
+bind = "0.0.0.0:9000"
 
 timeout = 20
 worker_connections = 500  # all worker handle max connects a time

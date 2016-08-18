@@ -4,7 +4,7 @@ build:
     - TARGET=staging
   commands:
     - mkdir -p /data/log/django
-    #- cd xiaoluform;python manage.py migrate --noinput
+    - cd xiaoluforum; python manage.py migrate --noinput
     #- python manage.py test -t . --keepdb
   when:
     branch: [staging]
@@ -28,15 +28,18 @@ deploy:
       branch: staging
     commands:
       - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys:forum      
+      - docker run --rm --volumes-from=static registry.aliyuncs.com/xiaolu-img/xiaolusys:forum  cp -rf static/spirit static/admin /data/forum/static
       - docker rm -f gunicorn-forum
-      - docker run --name=gunicorn-forum --restart=always -e TARGET=staging --volumes-from=static -d -p `ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`:9000:9000 -e BLUEWARE_CONFIG_FILE=blueware.ini registry.aliyuncs.com/xiaolu-img/xiaolusys:forum blueware-admin run-program gunicorn -k gevent -c project/gunicorn_conf.py project.wsgi
+      - docker run --name=gunicorn-forum --restart=always -e TARGET=staging --volumes-from=static -d -p `ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`:9003:9000 -e BLUEWARE_CONFIG_FILE=blueware.ini registry.aliyuncs.com/xiaolu-img/xiaolusys:forum blueware-admin run-program gunicorn -k gevent -c project/gunicorn_conf.py project.wsgi
   ssh:
     host:
+      - sale.xiaolumm.com
       - sale2.xiaolumm.com
     user: root
     when:
       branch: master
     commands:
       - docker pull registry.aliyuncs.com/xiaolu-img/xiaolusys:forum
+      - docker run --rm --volumes-from=static registry.aliyuncs.com/xiaolu-img/xiaolusys:forum  cp -rf static/spirit static/admin /data/forum/static
       - docker rm -f gunicorn-forum
-      - docker run --name=gunicorn-forum --restart=always -e TARGET=production --volumes-from=static -d -p `ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`:9000:9000 -e BLUEWARE_CONFIG_FILE=blueware.ini registry.aliyuncs.com/xiaolu-img/xiaolusys:forum blueware-admin run-program gunicorn -k gevent -c project/gunicorn_conf.py project.wsgi
+      - docker run --name=gunicorn-forum --restart=always -e TARGET=production --volumes-from=static -d -p `ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`:9003:9000 -e BLUEWARE_CONFIG_FILE=blueware.ini registry.aliyuncs.com/xiaolu-img/xiaolusys:forum blueware-admin run-program gunicorn -k gevent -c project/gunicorn_conf.py project.wsgi
