@@ -27,6 +27,12 @@ ALLOWED_HOSTS = ['.xiaolumm.com', '.xiaolumeimei.com']
 #    'debug_toolbar',
 # ])
 
+
+ INSTALLED_APPS.extend([
+     'project.login_provider_staging',
+ ])
+
+
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
