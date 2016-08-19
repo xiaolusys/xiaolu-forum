@@ -9,9 +9,9 @@ from allauth.socialaccount import app_settings
 
 class XLMMOAuth2Adapter(OAuth2Adapter):
     provider_id = XLMMProvider.id
-    access_token_url = 'http://staging.xiaolumeimei.com/o/token/'
-    authorize_url = 'http://staging.xiaolumeimei.com/o/authorize/'
-    profile_url = 'http://staging.xiaolumeimei.com/rest/v1/users/profile'
+    access_token_url = 'http://m.xiaolumeimei.com/o/token/'
+    authorize_url = 'http://m.xiaolumeimei.com/o/authorize/'
+    profile_url = 'http://m.xiaolumeimei.com/rest/v1/users/profile'
 
     def complete_login(self, request, app, token, **kwargs):
         resp = requests.get(self.profile_url,
