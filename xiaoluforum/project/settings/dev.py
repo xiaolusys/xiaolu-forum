@@ -27,6 +27,10 @@ ALLOWED_HOSTS = ['127.0.0.1', ]
 #    'debug_toolbar',
 # ])
 
+
+INSTALLED_APPS.extend([
+'project.login_provider_staging',
+])
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
@@ -67,5 +71,4 @@ CACHES.update({
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.MD5PasswordHasher',
 ]
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
