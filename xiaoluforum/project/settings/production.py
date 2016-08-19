@@ -30,7 +30,7 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL  # For error notifications
 # Extend the Spirit installed apps
 # Check out the .base.py file for more examples
 INSTALLED_APPS.extend([
-    # 'my_app1',
+	'project.login_provider',
 ])
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
