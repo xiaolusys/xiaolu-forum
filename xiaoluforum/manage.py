@@ -8,7 +8,7 @@ if __name__ == "__main__":
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings.staging")
 
     elif os.environ.get('TARGET') in ('production',):
-        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "product.settings.production")
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings.production")
 
     else:
         os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings.test")
