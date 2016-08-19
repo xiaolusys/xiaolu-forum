@@ -28,7 +28,7 @@ ALLOWED_HOSTS = ['.xiaolumm.com', '.xiaolumeimei.com']
 # ])
 
 
- INSTALLED_APPS.extend([
+INSTALLED_APPS.extend([
      'project.login_provider_staging',
  ])
 
