@@ -79,4 +79,4 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 ]
 
 # Append the MD5 hash of the file’s content to the filename
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
