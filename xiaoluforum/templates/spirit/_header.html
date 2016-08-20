@@ -1,12 +1,12 @@
 {% load spirit_tags i18n %}
 
     <header class="header js-tabs-container">
-		<a class="header-logo" href="{% url "spirit:index" %}">小鹿论坛</a>
+		<a class="header-logo" href="{% url "spirit:index" %}" style="margin-left:10%">小鹿论坛</a>
 
         {% if user.is_authenticated %}
             {% has_topic_notifications user as has_notifications %}
 
-            <ul class="header-tabs">
+            <ul class="header-tabs" style="margin-right:10%">
                 <li><a class="header-tab-link js-tab" href="{% url "spirit:search:search" %}" data-related=".js-search-content"><i class="fa fa-search"></i></a></li><!--
              --><li><a class="header-tab-link js-tab-notification{% if has_notifications %} is-highlighted{% endif %}" href="{% url "spirit:topic:notification:index" %}" data-related=".js-notifications-content"><i class="fa fa-bell"></i></a></li><!--
              --><li><a class="header-tab-link js-tab" href="{% url "spirit:user:menu" %}" data-related=".js-user-content">{{ user.first_name }} <i class="fa fa-chevron-down"></i></a></li>
@@ -39,6 +39,6 @@
 
             </div>
         {% else %}
-            <a class="header-link" href="{% url "xlmm_login" %}?next={% firstof request.get_full_path|urlencode '/' %}">{% trans "Log in" %}</a>
+            <a class="header-link" href="{% url "xlmm_login" %}?next={% firstof request.get_full_path|urlencode '/' %}" style="margin-right:10%">{% trans "Log in" %}</a>
         {% endif %}
 	</header>
