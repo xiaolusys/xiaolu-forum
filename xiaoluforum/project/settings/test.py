@@ -26,7 +26,15 @@ DATABASES = {
     }
 }
 
-ROOT_URLCONF = 'example.project.urls'
+# ROOT_URLCONF = 'example.project.urls'
+SITE_URL = '127.0.0.1'
+
+# settings for provider auth
+AUTH_SITE_URL = '127.0.0.1:8000'
+AUTH_TOKEN_URL = '%s/o/token/'% AUTH_SITE_URL
+AUTH_AUTHORIZE_URL = '%s/o/authorize/'% AUTH_SITE_URL
+AUTH_PROFILE_URL = '%s/rest/v1/users/profile'% AUTH_SITE_URL
+
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.MD5PasswordHasher',
