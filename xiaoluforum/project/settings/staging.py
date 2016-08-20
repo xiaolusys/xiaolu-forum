@@ -22,6 +22,13 @@ ADMINS = (('John', 'john@example.com'), )  # Log email to console when DEBUG = F
 SECRET_KEY = "DEV"
 
 ALLOWED_HOSTS = ['.xiaolumm.com', '.xiaolumeimei.com']
+SITE_URL = 'forum.xiaolumeimei.com'
+
+# settings for provider auth
+AUTH_SITE_URL = 'http://m.xiaolumeimei.com'
+AUTH_TOKEN_URL = '%s/o/token/'% AUTH_SITE_URL
+AUTH_AUTHORIZE_URL = '%s/o/authorize/'% AUTH_SITE_URL
+AUTH_PROFILE_URL = '%s/rest/v1/users/profile'% AUTH_SITE_URL
 
 # INSTALLED_APPS.extend([
 #    'debug_toolbar',
@@ -29,7 +36,6 @@ ALLOWED_HOSTS = ['.xiaolumm.com', '.xiaolumeimei.com']
 
 
 INSTALLED_APPS.extend([
-     'project.login_provider_staging',
  ])
 
 
@@ -66,7 +72,7 @@ CACHES.update({
     'st_rate_limit': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'spirit_rl_cache',
-        'TIMEOUT': None
+        'TIMEOUT': 20
     }
 })
 

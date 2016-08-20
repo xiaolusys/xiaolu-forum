@@ -1,5 +1,5 @@
 import requests
-
+from django.conf import settings
 from allauth.socialaccount.providers.oauth2.views import (OAuth2Adapter,
                                                           OAuth2LoginView,
                                                           OAuth2CallbackView)
@@ -9,9 +9,9 @@ from allauth.socialaccount import app_settings
 
 class XLMMOAuth2Adapter(OAuth2Adapter):
     provider_id = XLMMProvider.id
-    access_token_url = 'http://m.xiaolumeimei.com/o/token/'
-    authorize_url = 'http://m.xiaolumeimei.com/o/authorize/'
-    profile_url = 'http://m.xiaolumeimei.com/rest/v1/users/profile'
+    access_token_url = settings.AUTH_TOKEN_URL
+    authorize_url = settings.AUTH_AUTHORIZE_URL
+    profile_url = settings.AUTH_PROFILE_URL
 
     def complete_login(self, request, app, token, **kwargs):
         resp = requests.get(self.profile_url,
