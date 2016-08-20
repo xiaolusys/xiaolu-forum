@@ -12,7 +12,7 @@ from .base import *
 
 
 DEBUG = False
-
+TEMPLATES[0]['OPTIONS']['debug'] = False
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (('denghui', 'hlkysf@163.com'),)
 
