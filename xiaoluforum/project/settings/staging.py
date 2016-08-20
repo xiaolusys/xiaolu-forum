@@ -22,10 +22,10 @@ ADMINS = (('John', 'john@example.com'), )  # Log email to console when DEBUG = F
 SECRET_KEY = "DEV"
 
 ALLOWED_HOSTS = ['.xiaolumm.com', '.xiaolumeimei.com']
-SITE_URL = 'forum.xiaolumeimei.com'
+SITE_URL = 'http://forum-stg.xiaolumm.com'
 
 # settings for provider auth
-AUTH_SITE_URL = 'http://m.xiaolumeimei.com'
+AUTH_SITE_URL = 'http://staging.xiaolumeimei.com'
 AUTH_TOKEN_URL = '%s/o/token/'% AUTH_SITE_URL
 AUTH_AUTHORIZE_URL = '%s/o/authorize/'% AUTH_SITE_URL
 AUTH_PROFILE_URL = '%s/rest/v1/users/profile'% AUTH_SITE_URL
