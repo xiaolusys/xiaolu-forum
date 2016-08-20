@@ -13,6 +13,7 @@
 
                 <div class="comment-media">
                     <div class="comment-img">
+                            {% get_social_accounts c.user as accounts %}    <!-- 获取每个用户的extra_data头像 -->
                             {% if accounts.xlmm.0.extra_data.thumbnail %}
                                     <img class="comment-avatar" src={{accounts.xlmm.0.extra_data.thumbnail}} /> 
                             {% else %}
@@ -22,7 +23,6 @@
 
                     <div class="comment-body">
                         <div class="comment-info">
-
                             <div class="comment-username">
                                 <a class="username{% if c.user.st.is_administrator %} is-admin{% elif c.user.st.is_moderator %} is-mod{% endif %}" href="{{ c.user.st.get_absolute_url }}">{{ c.user.first_name }}</a><!-- <span class="comment-realname">{{ c.user.get_full_name }}</span> -->
                             </div>
