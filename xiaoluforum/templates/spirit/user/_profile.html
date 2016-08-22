@@ -11,13 +11,13 @@
 		<div class="profile-username">{{ p_user.first_name }}</div>
 	</div>
 
-    <div class="profile-info">
+<!--     <div class="profile-info">
 		<ul class="profile-track">
 			<li>
 				<div class="profile-title">{% trans "Joined at" %}</div>
 				<div class="profile-date">{{ p_user.date_joined|shortnaturaltime }}</div>
-			</li><!--
-		 --><li>
+			</li>
+		             <li>
 				<div class="profile-title">{% trans "Seen" %}</div>
 				<div class="profile-date">{{ p_user.st.last_seen|shortnaturaltime }}</div>
 			</li>
@@ -29,7 +29,7 @@
                 </li>
             {% endif %}
 		</ul>
-	</div>
+	</div> -->
 
     {% ifequal user.username p_user.username %}
         <!--<div class="profile-preferences">-->
