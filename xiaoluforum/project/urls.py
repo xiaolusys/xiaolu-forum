@@ -8,6 +8,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 import spirit.urls
+import project.comment.urls
+import project.topic.urls
+import project.user.urls
 
 # Override admin login for security purposes
 from django.contrib.auth.decorators import login_required
@@ -19,6 +22,9 @@ urlpatterns = [
     # url(r'^$', 'example.views.home', name='home'),
     # url(r'^example/', include('example.foo.urls')),
     url(r'^topic/notification/',include('project.remind.urls')),
+    url(r'^comment/', include(project.comment.urls, namespace='comment')),
+    url(r'^topic/', include(project.topic.urls, namespace='topic')),
+    url(r'^user/', include(project.user.urls, namespace='user')),
     url(r'^', include(spirit.urls)),
     url(r'^accounts/', include('allauth.urls')),
 
