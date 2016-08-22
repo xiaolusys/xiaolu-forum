@@ -30,6 +30,9 @@ INSTALLED_APPS.extend([
     'allauth.socialaccount',
     'project.login_provider',
     'project.remind',
+    'project.comment',
+    'project.topic',
+    'project.user',
 ])
 
 # same here, check out the spirit.settings.py
