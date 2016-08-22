@@ -18,7 +18,7 @@ urlpatterns = [
     # Examples:
     # url(r'^$', 'example.views.home', name='home'),
     # url(r'^example/', include('example.foo.urls')),
-
+    url(r'^topic/notification/',include('project.remind.urls')),
     url(r'^', include(spirit.urls)),
     url(r'^accounts/', include('allauth.urls')),
 
