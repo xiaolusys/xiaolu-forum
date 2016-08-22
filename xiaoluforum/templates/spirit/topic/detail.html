@@ -10,7 +10,7 @@
 {% block content %}
 
 
-        <ul class="nav">
+        <ul class="nav" style="margin-left:12px">
             <li><a href="{% url "spirit:index" %}" >{% trans "Main" %}</a><i class="fa fa-chevron-right"></i></li>
 
             {% if topic.category.parent_id %}
@@ -20,7 +20,7 @@
 		    <li><a href="{{ topic.category.get_absolute_url }}" >{{ topic.category.title }}</a></li>
         </ul>
 
-        <h1 class="headline">
+        <h1 class="headline" style="margin-left:12px">
             {% if topic.is_pinned or topic.is_globally_pinned %}
                 <i class="fa fa-thumb-tack"></i>
             {% endif %}
@@ -110,6 +110,7 @@
                         </div>
 
                         <div class="comment-body">
+
                             {% render_comments_form topic=topic %}
                         </div>
                     </div>
