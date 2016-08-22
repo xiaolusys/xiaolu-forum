@@ -13,8 +13,9 @@
 
                 <div class="comment-media">
                     <div class="comment-img">
-                            {% if accounts.xlmm.0.get_avatar_url %}
-                                    <img class="comment-avatar" src={{ accounts.xlmm.0.get_avatar_url }} />
+                            {% get_social_accounts c.user as accounts %}    <!-- 获取每个用户的extra_data头像 -->
+                            {% if accounts.xlmm.0.extra_data.thumbnail %}
+                                    <img class="comment-avatar" src={{accounts.xlmm.0.extra_data.thumbnail}} /> 
                             {% else %}
                                     <img class="comment-avatar" src="http://wx.qlogo.cn/mmopen/n24ek7Oc1iaXyxqzHobN7BicG5W1ljszSRWSdzaFeRkGGVwqjmQKTmicTylm8IkclpgDiaamWqZtiaTlcvLJ5z6x35wCKMWVbcYPU/0" />
                             {% endif %}
@@ -22,7 +23,6 @@
 
                     <div class="comment-body">
                         <div class="comment-info">
-
                             <div class="comment-username">
                                 <a class="username{% if c.user.st.is_administrator %} is-admin{% elif c.user.st.is_moderator %} is-mod{% endif %}" href="{{ c.user.st.get_absolute_url }}">{{ c.user.first_name }}</a><!-- <span class="comment-realname">{{ c.user.get_full_name }}</span> -->
                             </div>
