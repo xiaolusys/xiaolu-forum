@@ -16,4 +16,4 @@ requests-oauthlib==0.6.2
 gunicorn==19.4.5
 gevent==1.0.1
 greenlet==0.4.10
-
+raven==5.13.0
