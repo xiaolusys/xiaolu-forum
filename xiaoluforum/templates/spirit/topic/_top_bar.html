@@ -3,20 +3,20 @@
     <div class="container">
 		<div class="categories js-tabs-container">
 			<div >
-				<ul class="menu">
+				<ul class="menu" style="text-align: center; width:100%">
                     {% for c in categories %}
-                        <li><a class="menu-link" href="{{ c.get_absolute_url }}" style="text-align: center;background-color: #f5a623;color: black;">{{ c.title }}</a></li>   <!-- 直接显示帖子分类 -->
+                        <li><a class="menu-link" href="{{ c.get_absolute_url }}" style="text-align: center;float: left;background-color: #f5a623;color: black;width:33.333333%">{{ c.title }}</a></li>   <!-- 直接显示帖子分类 -->
                     {% endfor %}
                     {% for c in topcategories %}
-                        <li><a class="menu-link" href="{{ c.get_absolute_url }}" style="text-align: center;background-color: #f5a623;color: black;">{{ c.title }}</a></li>   <!-- 直接显示帖子分类 -->
+                        <li><a class="menu-link" href="{{ c.get_absolute_url }}" style="text-align: center;float: left;background-color: #f5a623;color: black;width:33.333333%">{{ c.title }}</a></li>   <!-- 直接显示帖子分类 -->
                     {% endfor %}
 				</ul>
-			</div>
-            {% if category %}
+			</div></br>
+<!--             {% if category %}
 			    <a class="dropdown-button js-tab" href="#" data-related=".js-categories-content" style="margin-left:5%">{{ category.title }} <i class="fa fa-chevron-down"></i></a> (请触摸选择分类)
 			{% else %}
                 <a class="dropdown-button js-tab" href="#" data-related=".js-categories-content" style="margin-left:5%">{% trans "All Categories" %} <i class="fa fa-chevron-down"></i></a>   (请触摸选择分类)
-            {% endif %}
+            {% endif %} -->
 
 			<div class="tab-content js-tab-content js-categories-content">
 				<ul class="menu">
