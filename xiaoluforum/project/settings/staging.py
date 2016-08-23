@@ -77,7 +77,6 @@ CACHES.update({
 })
 
 import raven
-
 RAVEN_CONFIG = {
     'dsn': 'http://c4b7824ed957431788b1868cd7bcf4f7:2f3a26553abc4827aa62c665e1fcbe0a@sentry.xiaolumm.com/7',
     # If you are using git, you can also automatically configure the

@@ -128,6 +128,11 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
+        'project': {
+            'handlers': ['console', 'sentry'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
         'django': {
             'handlers': ['console', 'sentry'],
             'level': 'ERROR',
