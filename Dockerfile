@@ -6,3 +6,4 @@ add . /var/www/deploy/forum
 workdir /var/www/deploy/forum/xiaoluforum
 
 run blueware-admin generate-config BAAGUgBTVAs065dBFQpCVFgfC06fb3VaWUgEVlMFG49d7QlVGgkNH1cB843eBwBJB1RPAQI= blueware.ini
+
