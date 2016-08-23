@@ -11,6 +11,7 @@ import spirit.urls
 import project.comment.urls
 import project.topic.urls
 import project.user.urls
+import project.category.urls
 
 # Override admin login for security purposes
 from django.contrib.auth.decorators import login_required
@@ -25,6 +26,7 @@ urlpatterns = [
     url(r'^comment/', include(project.comment.urls, namespace='comment')),
     url(r'^topic/', include(project.topic.urls, namespace='topic')),
     url(r'^user/', include(project.user.urls, namespace='user')),
+    url(r'^category/', include(project.category.urls, namespace='category')),
     url(r'^', include(spirit.urls)),
     url(r'^accounts/', include('allauth.urls')),
 

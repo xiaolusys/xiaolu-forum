@@ -35,6 +35,7 @@ INSTALLED_APPS.extend([
     'project.comment',
     'project.topic',
     'project.user',
+    'project.category',
 ])
 
 # same here, check out the spirit.settings.py
