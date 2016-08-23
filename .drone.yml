@@ -3,7 +3,7 @@ build:
   environment:
     - TARGET=staging
   commands:
-    - mkdir -p /data/log/django
+    - mkdir -p /data/log/django; pip install raven==5.13.0 -i http://mirrors.aliyun.com/pypi/simple
     - cd xiaoluforum; python manage.py migrate --noinput
     #- python manage.py test -t . --keepdb
   when:
