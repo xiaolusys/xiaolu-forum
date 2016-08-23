@@ -71,7 +71,7 @@ RAVEN_CONFIG = {
     'dsn': 'http://ebd1615df16b49b781b07617d95cb608:c444830467e04b4eb431b82f0e12c1d4@sentry.xiaolumm.com/6',
     # If you are using git, you can also automatically configure the
     # release based on the git info.
-    'release': raven.fetch_git_sha(BASE_DIR),
+    'release': raven.fetch_git_sha(os.path.dirname(BASE_DIR)),
 }
 
 # These are all the languages Spirit provides.
