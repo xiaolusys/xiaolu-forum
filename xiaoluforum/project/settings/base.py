@@ -25,6 +25,8 @@ ST_RATELIMIT_CACHE = 'st_rate_limit'
 # Check out the spirit.settings.py so you do not end up with duplicated apps.
 INSTALLED_APPS.extend([
     'django.contrib.sites',
+    'raven.contrib.django.raven_compat',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -115,15 +117,19 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'django.log'),
         },
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'raven.contrib.django.handlers.SentryHandler'
+        },
     },
     'loggers': {
         '': {
-            'handlers': ['console', 'mail_admins'],
+            'handlers': ['console', 'sentry'],
             'level': 'ERROR',
             'propagate': False,
         },
         'django': {
-            'handlers': ['console', 'mail_admins'],
+            'handlers': ['console', 'sentry'],
             'level': 'ERROR',
             'propagate': False,
         },
