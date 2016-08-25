@@ -1,7 +1,7 @@
 {% extends "spirit/_base.html" %}
 
 {% load spirit_tags i18n socialaccount %}
-{% get_social_accounts user as accounts %}
+
 
 {% load spirit_tags i18n %}
 
@@ -83,7 +83,7 @@
         {% endif %}
 
         {% include "spirit/comment/_render_list.html" %}
-        {% get_social_accounts user as accounts %}
+        
         <div class="container">
             {% render_paginator page=comments %}
 
@@ -97,6 +97,7 @@
         </div>
 
         {% if user.is_authenticated %}
+	    {% get_social_accounts user as accounts %}
             {% if not topic.is_closed %}
                 <div id="reply" class="reply">
 
