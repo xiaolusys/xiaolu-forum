@@ -9,7 +9,6 @@ import os
 import sys
 
 from spirit.settings import *
-
 # You may override or extend spirit settings below...
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,8 +24,18 @@ ST_RATELIMIT_CACHE = 'st_rate_limit'
 # Extend the Spirit installed apps.
 # Check out the spirit.settings.py so you do not end up with duplicated apps.
 INSTALLED_APPS.extend([
-    # 'my_app1',
-    # 'my_app2',
+    'django.contrib.sites',
+    'raven.contrib.django.raven_compat',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'project.login_provider',
+    'project.remind',
+    'project.comment',
+    'project.topic',
+    'project.user',
+    'project.category',
 ])
 
 # same here, check out the spirit.settings.py
@@ -37,8 +46,17 @@ MIDDLEWARE_CLASSES.extend([
 
 # same here
 TEMPLATES[0]['OPTIONS']['context_processors'].extend([
+    'django.template.context_processors.request',
     # 'my_template_proc1',
     # 'my_template_proc2',
+])
+
+TEMPLATES[0]['DIRS'] = [
+    os.path.join(BASE_DIR, 'templates'),
+]
+
+AUTHENTICATION_BACKENDS.extend([
+    'allauth.account.auth_backends.AuthenticationBackend',
 ])
 
 # same here (we update the Spirit caches)
@@ -56,7 +74,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'zh_Hans'
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'UTC'
 
@@ -71,11 +89,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/static/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 # Send an email to the site admins
 # on error when DEBUG=False,
@@ -100,17 +118,31 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'django.log'),
         },
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'raven.contrib.django.handlers.SentryHandler'
+        },
     },
     'loggers': {
         '': {
-            'handlers': ['console', 'mail_admins'],
+            'handlers': ['console', 'sentry'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'project': {
+            'handlers': ['console', 'sentry'],
             'level': 'ERROR',
             'propagate': False,
         },
         'django': {
-            'handlers': ['console', 'mail_admins'],
+            'handlers': ['console', 'sentry'],
             'level': 'ERROR',
             'propagate': False,
         },
     }
 }
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/accounts/xlmm/login/'
