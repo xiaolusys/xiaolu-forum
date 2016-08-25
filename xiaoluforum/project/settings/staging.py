@@ -22,6 +22,9 @@ ADMINS = (('John', 'john@example.com'), )  # Log email to console when DEBUG = F
 SECRET_KEY = "DEV"
 
 ALLOWED_HOSTS = ['.xiaolumm.com', '.xiaolumeimei.com']
+
+STATIC_ROOT = '/data/forum/static'
+MEDIA_ROOT  = '/data/forum/static/media'
 SITE_URL = 'http://forum-stg.xiaolumm.com'
 
 # settings for provider auth
