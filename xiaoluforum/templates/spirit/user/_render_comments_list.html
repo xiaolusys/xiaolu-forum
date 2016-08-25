@@ -4,7 +4,7 @@
 {% get_social_accounts user as accounts %}
 
 {% for c in comments %}
-    {% if c.user.st.is_moderator or not c.is_removed %}
+    {% if accounts.st.is_moderator or not c.is_removed %}
     <div class="comments">
             <div class="comment">
 
