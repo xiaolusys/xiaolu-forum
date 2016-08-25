@@ -22,7 +22,10 @@ SECRET_KEY = 'HicISfd7IEnvyPMOm4fQnvwLK5sreDl0wuS4DAA7ZJ8oZAitF8'
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['.xiaolumm.com', '.xiaolumeimei.com']
-SITE_URL      = 'http://forum.xiaolumeimei.com'
+
+STATIC_ROOT = '/data/forum/static'
+MEDIA_ROOT  = '/data/forum/static/media'
+SITE_URL    = 'http://forum.xiaolumeimei.com'
 
 # settings for provider auth
 AUTH_SITE_URL = 'http://m.xiaolumeimei.com'
