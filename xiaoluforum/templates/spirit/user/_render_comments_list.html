@@ -2,16 +2,16 @@
 
 {% load spirit_tags i18n socialaccount %}
 {% get_social_accounts user as accounts %}
+
+{% for c in comments %}
+    {% if c.user.st.is_moderator or not c.is_removed %}
     <div class="comments">
-
-        {% for c in comments %}
-
             <div class="comment">
 
                 <div class="comment-media">
                     <div class="comment-img">
                             {% if accounts.xlmm.0.extra_data.thumbnail %}
-                                    <img class="comment-avatar" src={{accounts.xlmm.0.extra_data.thumbnail}} />     
+                                    <img class="comment-avatar" src={{accounts.xlmm.0.extra_data.thumbnail}} />
                             {% else %}
                                     <img class="comment-avatar" src="http://wx.qlogo.cn/mmopen/n24ek7Oc1iaXyxqzHobN7BicG5W1ljszSRWSdzaFeRkGGVwqjmQKTmicTylm8IkclpgDiaamWqZtiaTlcvLJ5z6x35wCKMWVbcYPU/0" />
                             {% endif %}
@@ -37,12 +37,9 @@
                     </div>
                 </div>
             </div>
-
-        {% empty %}
-            <p>{% trans "There are no comments here, yet" %}</p>
-        {% endfor %}
-
     </div>
+    {% endif %}
+{% endfor %}
 
 
     <script>
