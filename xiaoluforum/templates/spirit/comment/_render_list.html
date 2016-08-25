@@ -6,7 +6,7 @@
 
 
 {% for c in comments %}
-    {% if c.user.st.is_moderator or not c.is_removed %}
+    {% if accounts.st.is_moderator or not c.is_removed %}
 <div class="comments">
 		<div class="comment{% if c.action %} is-highlighted{% endif %}" id="c{{forloop.counter0|add:comments.start_index }}" data-number="{{ forloop.counter0|add:comments.start_index }}" data-pk="{{ c.pk }}">
 
