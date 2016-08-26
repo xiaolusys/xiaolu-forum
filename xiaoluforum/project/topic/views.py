@@ -21,7 +21,7 @@ from spirit.topic import utils
 import datetime
 
 def detail(request, pk, slug):
-    
+
     topic = Topic.objects.get_public_or_404(pk, request.user)
     
     if topic.slug != slug:
@@ -43,6 +43,10 @@ def detail(request, pk, slug):
         c.date = c.date+datetime.timedelta(hours=8)
 	#strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
         c.date = c.date.strftime("%m-%d")
+
+    for t in topic:
+        t.last_active = t.last_active + datetime.timedelta(hours=8)
+
     context = {
         'topic': topic,
         'comments': comments
@@ -72,7 +76,7 @@ def index_active(request):
     for t in topics:
         t.last_active = t.last_active+datetime.timedelta(hours=8)
 	#strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
-        t.last_active = t.last_active.strftime("%m-%d")
+        # t.last_active = t.last_active.strftime("%m-%d")
     context = {
         'categories': categories,
         'topics': topics

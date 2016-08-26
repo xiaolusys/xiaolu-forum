@@ -11,7 +11,7 @@ from djconfig import config
 from spirit.core.utils.paginator import yt_paginate
 from spirit.topic.models import Topic
 from spirit.category.models import Category
-
+import datetime
 
 def detail(request, pk, slug):
     categories = Category.objects\
@@ -34,6 +34,10 @@ def detail(request, pk, slug):
         .order_by('-is_globally_pinned', '-is_pinned', '-last_active')\
         .select_related('category')
 
+    for i in topics:
+        i.last_active = i.last_active + datetime.timedelta(hours=8)
+        # strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
+        # i.last_active = i.last_active.strftime("%m-%d")
     topics = yt_paginate(
         topics,
         per_page=config.topics_per_page,
@@ -48,3 +52,10 @@ def detail(request, pk, slug):
     }
 
     return render(request, 'spirit/category/detail.html', context)
+
+
+class IndexView(ListView):
+
+    template_name = 'spirit/category/index.html'
+    context_object_name = "categories"
+    queryset = Category.objects.visible().parents()
