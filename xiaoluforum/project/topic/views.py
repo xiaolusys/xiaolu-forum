@@ -44,9 +44,6 @@ def detail(request, pk, slug):
 	#strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
         c.date = c.date.strftime("%m-%d")
 
-    for t in topic:
-        t.last_active = t.last_active + datetime.timedelta(hours=8)
-
     context = {
         'topic': topic,
         'comments': comments
