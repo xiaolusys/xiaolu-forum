@@ -6,7 +6,10 @@
 
 
 {% for c in comments %}
-    {% if accounts.st.is_moderator or not c.is_removed %}
+    {% if user.st.is_moderator or not c.is_removed %}
+<!--如果访问者是管理员,或者评论没有删除,评论才能显示-->
+        {% if not c.action or not user.st.is_moderator%}
+<!--如果访问者是管理员,或者评论状态只有为0,也就是不显示置顶的评论才能看-->
 <div class="comments">
 		<div class="comment{% if c.action %} is-highlighted{% endif %}" id="c{{forloop.counter0|add:comments.start_index }}" data-number="{{ forloop.counter0|add:comments.start_index }}" data-pk="{{ c.pk }}">
 
@@ -132,6 +135,7 @@
 
 		</div>
 </div>
+        {% endif %}
     {% endif %}
 {% endfor %}
 
