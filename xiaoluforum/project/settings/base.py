@@ -47,6 +47,7 @@ MIDDLEWARE_CLASSES.extend([
 # same here
 TEMPLATES[0]['OPTIONS']['context_processors'].extend([
     'django.template.context_processors.request',
+    'project.head_portrait.context_processors.head_portrait',
     # 'my_template_proc1',
     # 'my_template_proc2',
 ])
@@ -92,8 +93,23 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/static/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+HEAD_PORTRAIT = "http://img.xiaolumeimei.com/undefined1472268058597lADOa301H8zIzMg_200_200.jpg_620x10000q90g.jpg?imageMogr2/thumbnail/220/crop/220x220/format/jpg" #官方头像
+################### QINIU SETTINGS ##################
+QINIU_ACCESS_KEY = "M7M4hlQTLlz_wa5-rGKaQ2sh8zzTrdY8JNKNtvKN"
+QINIU_SECRET_KEY = "8MkzPO_X7KhYQjINrnxsJ2eq5bsxKU1XmE8oMi4x"
+QINIU_PRIVATE_BUCKET = 'invoiceroom'
+QINIU_PRIVATE_DOMAIN = '7xrpt3.com2.z0.glb.qiniucdn.com'
+QINIU_PUBLIC_BUCKET = 'xiaolumama'
+QINIU_PUBLIC_DOMAIN = '7xrst8.com2.z0.glb.qiniucdn.com'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
+############### REMOTE MEDIA STORAGE ################
+QINIU_BUCKET_NAME   = 'mediaroom'
+QINIU_BUCKET_DOMAIN = '7xogkj.com1.z0.glb.clouddn.com'
+QINIU_SECURE_URL    = 0
+DEFAULT_FILE_STORAGE = 'qiniustorage.backends.QiniuStorage'
+MEDIA_URL = "http://%s/" % QINIU_BUCKET_DOMAIN
+MEDIA_ROOT = "http://%s/" % QINIU_BUCKET_DOMAIN
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
 # Send an email to the site admins
 # on error when DEBUG=False,
