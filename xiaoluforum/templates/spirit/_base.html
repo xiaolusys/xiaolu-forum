@@ -1,0 +1,73 @@
+{% load spirit_tags i18n %}
+{% load static from staticfiles %}
+<!doctype html>
+<html>
+  <head>
+    <script>                                                                             
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f048763897ebcbfc0f7462f158296744";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% block title %}{% endblock %} - {{ config.site_name }}</title>
+    <meta name="description" content="{{ config.site_description }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{% static "spirit/stylesheets/styles.all.min.css" %}">
+
+    <script src="{% static "spirit/scripts/all.min.js" %}"></script>
+
+    <script>
+
+	$( document ).ready(function() {
+
+        $.tab();
+
+        $( 'a.js-post' ).postify( {
+            csrfToken: "{{ csrf_token }}",
+        } );
+
+        $('.js-messages').messages();
+
+        {% if user.is_authenticated %}
+            $.notification( {
+                notificationUrl: "{% url "spirit:topic:notification:index-ajax" %}",
+                notificationListUrl: "{% url "spirit:topic:notification:index-unread" %}",
+                mentionTxt: "{% trans "{user} has mention you on {topic}" %}",
+                commentTxt: "{% trans "{user} has commented on {topic}" %}",
+                showAll: "{% trans "Show all" %}",
+                empty: "{% trans "No new notifications, yet" %}",
+                unread: "{% trans "unread" %}",
+            } );
+        {% endif %}
+
+	});
+
+	</script>
+
+    {% block head-extra %}{% endblock %}
+
+    <!--[if (lt IE 9) & (!IEMobile)]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    {% include 'spirit/_header.html' %}
+    {% render_messages messages %}
+    {% block content %}{% endblock %}
+    {% include 'spirit/_footer.html' %}
+
+  </body>
+
+</html>
