@@ -1,0 +1,106 @@
+{% load i18n %}
+{% load static from staticfiles %}
+
+<div class="comment-text js-box-preview-content" style="display:none;"></div>
+<ul class="reply-markdown">
+	<li><a class="js-box-bold" href="#" title="{% trans "Bold" %}"><i class="fa fa-bold"></i></a></li><!--
+ --><li><a class="js-box-italic" href="#" title="{% trans "Italic" %}"><i class="fa fa-italic"></i></a></li><!--
+ --><li><a class="js-box-list" href="#" title="{% trans "List" %}"><i class="fa fa-list"></i></a></li><!--
+ --><li><a class="js-box-url" href="#" title="{% trans "URL" %}"><i class="fa fa-link"></i></a></li><!--
+ --><li><a class="js-box-image" href="#" title="{% trans "Image" %}"><i class="fa fa-picture-o"></i></a></li><!--
+ --><li><a class="js-box-poll" href="#" title="{% trans "Poll" %}"><i class="fa fa-bar-chart-o"></i></a></li><!--
+ --><li><a class="js-box-preview" href="#" title="{% trans "Preview" %}"><i class="fa fa-eye"></i></a></li>
+</ul>
+
+<script type="text/javascript">window.BWEUM||(BWEUM={});BWEUM.info={"beacon":"bi-collector.oneapm.com/beacon/rum/python","queueTime":0,"licenseKey":"vEJEz~YijVzz2n3n","agent":"//bi-collector.oneapm.com/static/js/bw-send-411.4.5.js","transactionName":"FSQjEycGLCc3IgdZWSxuBzI7BDY9OS9cVlojMik0NAsneiEuAVtZMCUkNXsRKzEhMl1HWTAqLjUxAjBuISo=","applicationID":2277013,"errorBeacon":"bi-collector.oneapm.com/beacon/error/python","applicationTime":36}</script>
+<!--<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">-->
+<!--<link href="http://admin.xiaolumm.com/static/animate.css" rel="stylesheet">-->
+<!--<link href="http://admin.xiaolumm.com/static/wap/css/sweet-alert.css" rel="stylesheet">-->
+<!--<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>-->
+<!--<script src="http://admin.xiaolumm.com/static/jquery/jquery-2.1.1.min.js"></script>-->
+<!--<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+<script type="text/javascript" src="http://bi-collector.oneapm.com/static/js/bw-loader-411.4.5.js"></script><script type="text/javascript">window.BWEUM||(BWEUM={});BWEUM.info={"beacon":"bi-collector.oneapm.com/beacon/rum/python","queueTime":0,"licenseKey":"vEJEz~YijVzz2n3n","agent":"//bi-collector.oneapm.com/static/js/bw-send-411.4.5.js","transactionName":"FSQjEycGLCc3IgdZWSxuBzI7BDY9OS9cQ14tMSMmNgxsPSIkHkMYNCgkMCZJMiY5JQZTQngRMygxEiEgGyAdUVEnFygiIjQnIHgpFlFaNik=","applicationID":2277013,"errorBeacon":"bi-collector.oneapm.com/beacon/error/python","applicationTime":36}</script>
+<script src="http://admin.xiaolumm.com/static/underscore/underscore-min.js"></script>
+<script src="http://admin.xiaolumm.com/static/script/qiniu.js"></script>
+<script src="http://admin.xiaolumm.com/static/script/qiniu_file_name_handler.js"></script>
+<script src="http://admin.xiaolumm.com/static/plugins/xiaolu-uploader/uploader.js?v=0.1"></script>
+<script src="//cdn.bootcss.com/plupload/2.1.7/plupload.full.min.js"></script>
+<script src="//cdn.bootcss.com/plupload/2.1.7/i18n/zh_CN.js"></script>
+<link href="http://admin.xiaolumm.com/static/plugins/xiaolu-uploader/uploader.css" rel="stylesheet">
+
+{% if user.st.is_moderator %}
+    <div class="form-group">
+        <label class="control-label">附件:</label>
+        <input type="hidden" id="pickfiles">
+        <ul id="files" class="uploader"></ul>
+    </div>
+{% endif %}
+<script>
+         $(function(){
+             $('#files').uploader({
+                 fileButton: 'pickfiles',
+                 domain: 'http://img.xiaolumeimei.com/',
+                 imageOp: 'imageMogr2/thumbnail/220/crop/220x220/format/jpg',
+                 maxLength: 1,
+                 width: 100,
+                 height: 100
+             });
+             });
+</script>
+
+
+<script>
+    $( document ).ready(function() {
+
+        marked.setOptions( {
+            renderer: new marked.Renderer(),
+            gfm: true,
+            tables: false,
+            breaks: true,
+            pedantic: false,
+            sanitize: true,
+            smartLists: false,
+            smartypants: false
+        } );
+
+        $( '.js-reply' ).find( 'textarea' ).editor_image_upload( {
+			csrfToken: "{{ csrf_token }}",
+			target: "{% url "spirit:comment:image-upload-ajax" %}",
+			placeholderText: "{% trans "uploading {image_name}" %}"
+		} )
+        .editor( {
+			boldedText: "{% trans "bolded text" %}",
+			italicisedText: "{% trans "italicised text" %}",
+			listItemText: "{% trans "list item" %}",
+			linkText: "{% trans "link text" %}",
+			linkUrlText: "{% trans "link url" %}",
+			imageText: "{% trans "image text" %}",
+			imageUrlText: "{% trans "image url" %}",
+			pollTitleText: "{% trans "Title" %}",
+			pollChoiceText: "{% trans "Description" %}"
+		} )
+        .atwho({
+			at: ':',
+			tpl: "<li data-value=':${name}:'><i class=\"tw tw-${class_name}\"></i> ${name} </li>",
+			data: $.emoji_list(),
+            callbacks: {
+                before_save: function(data) {return data},  // Avoid extra work
+                tpl_eval: function(tpl, map) {
+                    map.class_name = map.name
+                            .split('_').join('-')
+                            .split('+').join('plus');
+
+                    try {
+                        return tpl.replace(/\$\{([^\}]*)\}/g, function(tag, key, pos) {
+                            return map[key]
+                        });
+                    } catch (error) {
+                        return "";
+                    }
+                }
+
+            }
+		});
+
+	});
+</script>

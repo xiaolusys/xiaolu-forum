@@ -17,4 +17,6 @@ gunicorn==19.4.5
 gevent==1.0.1
 greenlet==0.4.10
 raven==5.13.0
+django-qiniu-storage==2.3.0
+qiniu==7.0.5
 
