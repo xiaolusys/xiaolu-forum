@@ -19,7 +19,6 @@ from qiniu import Auth, put_file, put_data, etag, urlsafe_base64_encode
 import qiniu.config
 import hashlib
 from django.utils import six
-import Image
 
 class CommentForm(forms.ModelForm):
 
