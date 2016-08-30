@@ -2,8 +2,9 @@
 
 {% load spirit_tags i18n socialaccount %}
 
-
 {% load spirit_tags i18n %}
+
+{% load comment_tags i18n %}
 
 {% block title %}{{ topic.title }}{% endblock %}
 
@@ -112,7 +113,7 @@
 
                         <div class="comment-body">
 
-                            {% render_comments_form topic=topic %}
+                            {% render_comments_form_user topic=topic user=user%}
                         </div>
                     </div>
 
