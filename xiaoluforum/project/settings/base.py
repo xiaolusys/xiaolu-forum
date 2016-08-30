@@ -13,7 +13,7 @@ from spirit.settings import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-
+ST_COMMENT_MAX_LEN = 3000
 # Quick-start development settings - unsuitable for production
 
 # Application definition
@@ -36,6 +36,7 @@ INSTALLED_APPS.extend([
     'project.topic',
     'project.user',
     'project.category',
+    'project.mm'
 ])
 
 # same here, check out the spirit.settings.py

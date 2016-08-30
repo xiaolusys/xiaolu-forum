@@ -15,9 +15,9 @@ from spirit.core.utils.decorators import moderator_required
 from spirit.core.utils import markdown, paginator, render_form_errors, json_response
 from spirit.topic.models import Topic
 from spirit.comment.models import Comment
-from spirit.comment.forms import CommentForm, CommentMoveForm, CommentImageForm
+from spirit.comment.forms import CommentForm, CommentMoveForm #取消从spirit.comment下载入CommentImageForm,从当前中导入CommentImageForm
+from .forms import CommentImageForm
 from spirit.comment.utils import comment_posted, post_comment_update, pre_comment_update
-
 
 @login_required
 @ratelimit(rate='1/10s')
@@ -114,6 +114,7 @@ def find(request, pk):
                             config.comments_per_page,
                             'page')
     return redirect(url)
+
 
 
 @require_POST

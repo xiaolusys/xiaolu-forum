@@ -13,6 +13,7 @@ import project.topic.urls
 import project.user.urls
 import project.category.urls
 import project.topic.views
+import project.mm.urls
 
 # Override admin login for security purposes
 from django.contrib.auth.decorators import login_required
@@ -30,6 +31,7 @@ urlpatterns = [
     url(r'^category/', include(project.category.urls, namespace='category')),
     url(r'^$', project.topic.views.index_active, name='index'),
     url(r'^', include(spirit.urls)),
+    url(r'^mm/',include(project.mm.urls,namespace='mm')),
     url(r'^accounts/', include('allauth.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
