@@ -24,7 +24,6 @@
 
         {# topic #}
         {% include "spirit/_form.html" %}
-
         {# comment #}
         <div class="topic-publish-comment">
             {% include "spirit/_form.html" with form=cform %}
@@ -32,7 +31,6 @@
 
         <div class="container">
             {% include "spirit/comment/_editor.html" %}
-
             <input class="button reply-button" type="submit" value="{% trans "Publish" %}" style="background-color: #f5a623; border-radius: 16px; width: 90%;margin-left: 5%;" />
         </div>
     </form>

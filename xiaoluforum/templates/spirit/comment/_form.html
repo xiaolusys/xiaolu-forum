@@ -12,8 +12,7 @@
     {% endfor %}
 
     <div class="container">
-        {% include "spirit/comment/_editor.html" %}
-
+        {% include "spirit/comment/_editor.html" with user=user%}
         <input class="button reply-button" type="submit" value="{% trans "Publish" %}"  style="background-color: #f5a623;border-radius: 16px;" />
     </div>
 </form>
