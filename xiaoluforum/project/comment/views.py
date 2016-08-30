@@ -19,6 +19,10 @@ from spirit.comment.forms import CommentForm, CommentMoveForm #取消从spirit.c
 from .forms import CommentImageForm
 from spirit.comment.utils import comment_posted, post_comment_update, pre_comment_update
 
+from ..push.app_push import AppPush
+from allauth.socialaccount.models import SocialAccount
+from .utils import at_push
+
 @login_required
 @ratelimit(rate='1/10s')
 def publish(request, topic_id, pk=None):
@@ -33,6 +37,16 @@ def publish(request, topic_id, pk=None):
         if not request.is_limited and form.is_valid():
             comment = form.save()
             comment_posted(comment=comment, mentions=form.mentions)
+            Comment.objects.for_access(user=request.user)
+            if pk:
+                comment = get_object_or_404(Comment.objects.for_access(user=request.user), pk=pk)
+                at_push(comment.user,request.user)
+                # print request.user.first_name+"给"+comment.user.first_name+"发了一条消息"
+                # msg = request.user.first_name + "给" + comment.user.first_name + "回复一条评论"
+                # customer_id = SocialAccount.objects.filter(user_id=comment.user.id).first().extra_data['id']
+                # print customer_id
+                # app_push = AppPush()
+                # app_push.push(customer_id,"com.jimei.xlmm://app/v1/vip_forum",msg)
             return redirect(request.POST.get('next', comment.get_absolute_url()))
     else:
         initial = None
@@ -41,7 +55,6 @@ def publish(request, topic_id, pk=None):
             comment = get_object_or_404(Comment.objects.for_access(user=request.user), pk=pk)
             quote = markdown.quotify(comment.comment, comment.user.first_name)
             initial = {'comment': quote, }
-
         form = CommentForm(initial=initial)
 
     context = {
