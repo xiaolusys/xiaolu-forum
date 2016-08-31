@@ -36,7 +36,8 @@ INSTALLED_APPS.extend([
     'project.topic',
     'project.user',
     'project.category',
-    'project.mm'
+    'project.mm',
+    'project.push',
 ])
 
 # same here, check out the spirit.settings.py
@@ -56,6 +57,19 @@ TEMPLATES[0]['OPTIONS']['context_processors'].extend([
 TEMPLATES[0]['DIRS'] = [
     os.path.join(BASE_DIR, 'templates'),
 ]
+
+
+# 小米推送
+IOS_APP_SECRET = 'UN+ohC2HYHUlDECbvVKefA=='
+ANDROID_APP_SECRET = 'WHdmdNYgnXWokStntg87sg=='
+
+# ================ 小米推送 END ==================
+
+################### PING++ SETTINGS ##################
+PINGPP_CLENTIP = "121.199.168.159"
+PINGPP_APPID = "app_LOOajDn9u9WDjfHa"
+PINGPP_APPKEY = "sk_live_HOS4OSW10u5CDyrn5Gn9izLC"
+
 
 AUTHENTICATION_BACKENDS.extend([
     'allauth.account.auth_backends.AuthenticationBackend',
