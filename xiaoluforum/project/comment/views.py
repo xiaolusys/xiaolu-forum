@@ -37,10 +37,10 @@ def publish(request, topic_id, pk=None):
         if not request.is_limited and form.is_valid():
             comment = form.save()
             comment_posted(comment=comment, mentions=form.mentions)
-            Comment.objects.for_access(user=request.user)
-            if pk:
-                comment = get_object_or_404(Comment.objects.for_access(user=request.user), pk=pk)
-                at_push(comment.user,request.user)
+            # Comment.objects.for_access(user=request.user)
+            # if pk:
+            #     comment = get_object_or_404(Comment.objects.for_access(user=request.user), pk=pk)
+                # at_push(comment.user,request.user)
                 # print request.user.first_name+"给"+comment.user.first_name+"发了一条消息"
                 # msg = request.user.first_name + "给" + comment.user.first_name + "回复一条评论"
                 # customer_id = SocialAccount.objects.filter(user_id=comment.user.id).first().extra_data['id']
