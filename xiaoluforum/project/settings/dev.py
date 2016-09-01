@@ -105,3 +105,7 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.MD5PasswordHasher',
 ]
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+PUSH_LOGIN_URL = 'http://staging.xiaolumm.com/admin/login/'
+PUSH_URL = 'http://staging.xiaolumm.com/luntan/at_push/'
+PUSH_ADMIN_INFO = {'username':'hui.deng', 'password': '139cnm'}

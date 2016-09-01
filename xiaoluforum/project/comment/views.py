@@ -18,6 +18,8 @@ from spirit.comment.models import Comment
 from spirit.comment.forms import CommentForm, CommentMoveForm #取消从spirit.comment下载入CommentImageForm,从当前中导入CommentImageForm
 from .forms import CommentImageForm
 from spirit.comment.utils import comment_posted, post_comment_update, pre_comment_update
+import requests
+from django.conf import settings
 
 from ..push.app_push import AppPush
 from allauth.socialaccount.models import SocialAccount
@@ -37,13 +39,24 @@ def publish(request, topic_id, pk=None):
         if not request.is_limited and form.is_valid():
             comment = form.save()
             comment_posted(comment=comment, mentions=form.mentions)
-            # Comment.objects.for_access(user=request.user)
-            # if pk:
-            #     comment = get_object_or_404(Comment.objects.for_access(user=request.user), pk=pk)
-                # at_push(comment.user,request.user)
-                # print request.user.first_name+"给"+comment.user.first_name+"发了一条消息"
-                # msg = request.user.first_name + "给" + comment.user.first_name + "回复一条评论"
-                # customer_id = SocialAccount.objects.filter(user_id=comment.user.id).first().extra_data['id']
+            Comment.objects.for_access(user=request.user)
+            if pk:
+
+                comment_push = get_object_or_404(Comment.objects.for_access(user=request.user), pk=pk)
+                # at_push(comment_push.user,request.user)
+                # print request.user.first_name+"给"+comment_push.user.first_name+"发了一条消息"
+                # msg = request.user.first_name + "给" + comment_push.user.first_name + "回复一条评论"
+                customer_id = SocialAccount.objects.filter(user_id=comment_push.user.id).first().extra_data['id']
+                login_url = settings.PUSH_LOGIN_URL
+                push_url = settings.PUSH_URL+str(customer_id)+'/at_push'
+                admin_info = settings.PUSH_ADMIN_INFO
+                push_info = {'back_nickname': request.user.first_name, 'comment_nickname': comment_push.user.first_name}
+                s = requests.Session()
+                s2 = s.post(login_url, admin_info)
+                # print s2.text
+                s3 = s.post(push_url, push_info)
+                # print s3.text
+
                 # print customer_id
                 # app_push = AppPush()
                 # app_push.push(customer_id,"com.jimei.xlmm://app/v1/vip_forum",msg)
