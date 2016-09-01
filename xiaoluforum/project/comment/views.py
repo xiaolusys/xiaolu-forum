@@ -19,11 +19,23 @@ from spirit.comment.forms import CommentForm, CommentMoveForm #取消从spirit.c
 from .forms import CommentImageForm
 from spirit.comment.utils import comment_posted, post_comment_update, pre_comment_update
 import requests
+import threading
+
 from django.conf import settings
 
 from ..push.app_push import AppPush
 from allauth.socialaccount.models import SocialAccount
 from .utils import at_push
+
+
+def push_by_xiaolusys(login_url,push_url,admin_info,push_info):
+    s = requests.Session()
+    s2 = s.post(login_url, admin_info)
+    # print s2.text
+    s3 = s.post(push_url, push_info)
+    # print s3.text
+
+
 
 @login_required
 @ratelimit(rate='1/10s')
@@ -51,11 +63,9 @@ def publish(request, topic_id, pk=None):
                 push_url = settings.PUSH_URL+str(customer_id)+'/at_push'
                 admin_info = settings.PUSH_ADMIN_INFO
                 push_info = {'back_nickname': request.user.first_name, 'comment_nickname': comment_push.user.first_name}
-                s = requests.Session()
-                s2 = s.post(login_url, admin_info)
-                # print s2.text
-                s3 = s.post(push_url, push_info)
-                # print s3.text
+                t1 = threading.Thread(target=push_by_xiaolusys,args=(login_url,push_url,admin_info,push_info))                #把推送接口函数启动多线程运行,防止调用失败程序不运行下去
+                t1.setDaemon(True)
+                t1.start()
 
                 # print customer_id
                 # app_push = AppPush()

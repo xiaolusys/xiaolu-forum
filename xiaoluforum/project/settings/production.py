@@ -118,6 +118,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 
-# PUSH_LOGIN_URL = 'http://m.xiaolumm.com/admin/login/'
-# PUSH_URL = 'http://m.xiaolumm.com/luntan/at_push/'
-# PUSH_ADMIN_INFO = {'username':'dev.huideng', 'password': 'yduk9s71'}
+PUSH_LOGIN_URL = 'http://m.xiaolumm.com/admin/login/'
+PUSH_URL = 'http://m.xiaolumm.com/luntan/at_push/'
+PUSH_ADMIN_INFO = {'username':'dev.huideng', 'password': 'yduk9s71'}
