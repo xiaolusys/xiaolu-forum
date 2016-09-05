@@ -13,6 +13,8 @@ from spirit.topic.models import Topic
 from spirit.category.models import Category
 import datetime
 
+from ..topic.extra import *
+
 def detail(request, pk, slug):
     categories = Category.objects\
         .visible()\
@@ -37,13 +39,19 @@ def detail(request, pk, slug):
     for i in topics:
         i.last_active = i.last_active + datetime.timedelta(hours=8)
         # strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
-        # i.last_active = i.last_active.strftime("%m-%d")
+        i.last_active = i.last_active.strftime("%Y-%m-%d")
+
+    for topic in topics:
+        topic.like_counts = get_likes_count_by_topic(topic)
+        topic.first_comment = get_first_comment_by_topic(topic)
+
+
     topics = yt_paginate(
         topics,
         per_page=config.topics_per_page,
         page_number=request.GET.get('page', 1)
     )
-    print categories
+
     context = {
         'topcategories':categories,       #在渲染一个帖子分类的时候,显示所有的帖子分类,原来的情况是如果选了一个帖子分类,其他的帖子分类不会显示
         'category': category,
