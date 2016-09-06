@@ -57,8 +57,8 @@
                         <i class="fa fa-lock"></i>
                     {% endif %}
 
-                    <a class="row-link{% if t.is_visited %} is-visited{% endif %}" href="{{ t.get_absolute_url }}" style="color: #585858; font-size: 22px; ">{{ t.title }}</a>  <!-- 字体颜色设置为黑色 -->
-                    <p style="color:#979797; font-size:18px; line-height:30px;letter-spacing:1px; margin-bottom:1px;padding-bottom:1px;">{{t.first_comment}}</p>
+                    <a class="row-link{% if t.is_visited %} is-visited{% endif %}" href="{{ t.get_absolute_url }}" style="color: #585858; font-size: 18px; ">{{ t.title }}</a>  <!-- 字体颜色设置为黑色 -->
+                    <p style="color:#979797; font-size:14px; letter-spacing:1px; margin-bottom:1px;padding-bottom:1px;">{{t.first_comment}}</p>
                 </div>
 
                 <div class="row-info" style="margin-top:1px">
