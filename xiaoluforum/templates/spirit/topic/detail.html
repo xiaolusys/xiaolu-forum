@@ -86,7 +86,11 @@
         {% include "spirit/comment/_render_list.html" %}
         
         <div class="container">
-            {% render_paginator page=comments %}
+            <a href="javascript:scroll(0,0)" mce_href="javascript:scroll(0,0)" style="color:black;float:right;margin-top:10px;margin-right:30px"><i  style="font-size:150%;color:#f5a623" class="fa fa-sort-asc"></i></a>
+            <div style="margin-left:1px;margin-top:10px">
+                {% render_paginator page=comments %}
+            </div>
+
 
             <div class="notify">
                 {% if user.is_authenticated %}
