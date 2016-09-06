@@ -7,7 +7,7 @@
  --><li><a class="js-box-italic" href="#" title="{% trans "Italic" %}"><i class="fa fa-italic"></i></a></li><!--
  --><li><a class="js-box-list" href="#" title="{% trans "List" %}"><i class="fa fa-list"></i></a></li><!--
  --><li><a class="js-box-url" href="#" title="{% trans "URL" %}"><i class="fa fa-link"></i></a></li><!--
- --><!--
+ --><li><a class="js-box-image" href="#" title="{% trans "Image" %}"><i class="fa fa-picture-o"></i></a></li><!--
  --><li><a class="js-box-poll" href="#" title="{% trans "Poll" %}"><i class="fa fa-bar-chart-o"></i></a></li><!--
  --><li><a class="js-box-preview" href="#" title="{% trans "Preview" %}"><i class="fa fa-eye"></i></a></li>
 
@@ -29,14 +29,14 @@
 <script src="//cdn.bootcss.com/plupload/2.1.7/i18n/zh_CN.js"></script>
 <link href="http://admin.xiaolumm.com/static/plugins/xiaolu-uploader/uploader.css" rel="stylesheet">
 
-<div class="form-group">
+
 <input type="hidden" id="pickfiles">
 <ul id="files" class="uploader"></ul>
-</div>
+
 <script>
          $(function(){
              $('#files').uploader({
-                 fileButton: 'pickfiles',
+
                  domain: 'http://img.xiaolumeimei.com/',
                  imageOp: 'imageMogr2/thumbnail/550/crop/800x800/format/jpg',
                  maxLength: 1,

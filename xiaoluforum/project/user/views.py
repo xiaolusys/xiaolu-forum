@@ -53,7 +53,7 @@ def comments(request, pk, slug):
     for u in user_comments:
         u.date = u.date + datetime.timedelta(hours=8)
 	#strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
-        u.date = u.date.strftime("%m-%d")
+        u.date = u.date.strftime("%Y-%m-%d")
     return _activity(
         request, pk, slug,
         queryset=user_comments,
