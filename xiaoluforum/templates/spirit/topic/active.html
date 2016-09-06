@@ -1,0 +1,16 @@
+{% extends "spirit/_base.html" %}
+
+{% load spirit_tags i18n %}
+
+{% block title %}{% trans "Latest active topics" %}{% endblock %}
+
+{% block content %}
+
+    {% include "spirit/topic/_top_bar.html" with category=None categories=categories %}
+
+    {% include "spirit/topic/_render_list.html" %}
+    <a href="javascript:scroll(0,0)" mce_href="javascript:scroll(0,0)" style="color:black;float:right;margin-top:10px;margin-right:30px"><i  style="font-size:150%;color:#f5a623" class="fa fa-sort-asc"></i></a>
+
+    {% render_paginator topics %}
+
+{% endblock %}

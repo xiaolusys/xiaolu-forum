@@ -36,6 +36,7 @@
                     </nav>
                 </div>
             </div>
+        <div class="header-tab-content js-tab-content js-notifications-content"></div>
         {% else %}
             <a class="header-link" href="{% url "xlmm_login" %}?next={% firstof request.get_full_path|urlencode '/' %}" style="margin-right:10%">{% trans "Log in" %}</a>
         {% endif %}
