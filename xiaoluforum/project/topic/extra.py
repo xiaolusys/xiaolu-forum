@@ -22,6 +22,8 @@ def get_first_comment_by_topic(topic):
     comments = comments.first().comment
     if len(comments)>60:
         comments = comments[0:60]+"......"
+    if comments.find('7xogkj')!= -1:
+        comments = '......'
     return comments
 
 #获得所有topic喜欢的数目
