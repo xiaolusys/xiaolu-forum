@@ -10,8 +10,8 @@
 <!--如果访问者是管理员,或者评论没有删除,评论才能显示-->
         {% if user.st.is_moderator or not c.action %}
 <!--如果访问者是管理员,或者评论状态只有为0,也就是不显示置顶的评论才能看-->
-<div class="comments">
-		<div class="comment{% if c.action %} is-highlighted{% endif %}" id="c{{forloop.counter0|add:comments.start_index }}" data-number="{{ forloop.counter0|add:comments.start_index }}" data-pk="{{ c.pk }}">
+<div>
+		<div class="comment{% if c.action %} is-highlighted{% endif %}" style="margin-bottom:0px;border-bottom:10px solid #F2F2F2; border-top:#F2F2F2 1px solid" id="c{{forloop.counter0|add:comments.start_index }}" data-number="{{ forloop.counter0|add:comments.start_index }}" data-pk="{{ c.pk }}">
 
             {% if not c.is_removed %}
 
@@ -28,7 +28,7 @@
                     <div class="comment-body">
                         <div class="comment-info">
                             <div class="comment-username">
-                                <a class="username{% if c.user.st.is_administrator %} is-admin{% elif c.user.st.is_moderator %} is-mod{% endif %}" >{{ c.user.first_name }}</a><!-- <span class="comment-realname">{{ c.user.get_full_name }}</span> -->
+                                <a class="username{% if c.user.st.is_administrator %} is-admin{% elif c.user.st.is_moderator %} is-mod{% endif %}" style="color: black; font-size: 18px;">{{ c.user.first_name }}</a><!-- <span class="comment-realname">{{ c.user.get_full_name }}</span> -->
                             </div>
 
                             <ul class="comment-date">
@@ -58,7 +58,7 @@
                                 <li><a href="{% url "spirit:comment:delete" c.pk %}"><i class="fa fa-times"></i> {% trans "delete" %}</a></li>
                             {% endif %}
 
-                            <li><a href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a></li>
+                            <!--<li><a href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a></li>-->
                         {% endif %}
 
                         <!--<li><a class="js-share" href="#" data-dialog=".js-share-{{ c.pk }}"><i class="fa fa-share"></i> {% trans "share" %}</a></li>-->
@@ -80,8 +80,8 @@
                             {% endif %}
 
                             {% ifnotequal c.user.pk user.pk %}
-                                <li><a href="{% url "spirit:comment:publish" topic_id=topic.pk pk=c.pk %}" >{% trans "quote" %}</a></li>
-                                <li><a href="#reply" >{% trans "reply" %}</a></li>
+                                <li><a href="{% url "spirit:comment:publish" topic_id=topic.pk pk=c.pk %}" >{% trans "reply" %}</a></li>
+                                <!--<li><a href="#reply" >{% trans "reply" %}</a></li>-->
                             {% endifnotequal %}
                         {% endif %}
                     </ul>

@@ -1,42 +1,51 @@
 {% load i18n %}
 
-    <div class="container">
-		<div class="categories js-tabs-container">
-			<div >
-				<ul class="menu" style="width:100%">
+<style>
+ni:link {color:#585858;}    /* 未被访问的链接 */
+ni:visited {color:#585858;} /* 已被访问的链接 */
+ni:hover {color:#585858;}   /* 鼠标指针移动到链接上 */
+ni:active {color:#f5a623;}  /* 正在被点击的链接 */
+</style>
+
+    <div >
+			<div>
+				<ul style="width:100%; background-color: #F2F2F2;">
+                        <li  style="border-top: 1px solid #F2F2F2;border-bottom: 1px solid #F2F2F2;display:inline;float:left;width:20%"><a id="classficaton" class="menu-link" href="/" style="font-size:90%;font-weight:50;padding-top: 20px;padding-bottom: 20px;background-color: #FFFFFF;color: #585858;text-align:left"><ni>全部</ni></a></li>
                     {% for c in categories %}
-                        <li style="display:inline;float:left;width:33.33%"><a class="menu-link" href="{{ c.get_absolute_url }}" style="background-color: #f5a623;color: black; text-align:center">{{ c.title }}</a></li>   <!-- 直接显示帖子分类 -->
+                        <li style="border-top: 1px solid #F2F2F2;border-bottom: 1px solid #F2F2F2;display:inline;float:left;width:26.66%"><a class="menu-link" href="{{ c.get_absolute_url }}" style="font-size:90%;font-weight:50;padding-top: 20px;padding-bottom: 20px;background-color: #FFFFFF;color: #585858;text-align:right"><ni>{{ c.title }}</ni></a></li>   <!-- 直接显示帖子分类 -->
                     {% endfor %}
                     {% for c in topcategories %}
-                        <li style="display:inline;float:left;width:33.33%"><a class="menu-link" href="{{ c.get_absolute_url }}" style="background-color: #f5a623;color: black;text-align:center">{{ c.title }}</a></li>   <!-- 直接显示帖子分类 -->
+                        <li style="border-top: 1px solid #F2F2F2;border-bottom: 1px solid #F2F2F2;display:inline;float:left;width:26.66%"><a class="menu-link" href="{{ c.get_absolute_url }}" style="font-size:90%;font-weight:50;padding-top: 20px;padding-bottom: 20px;background-color: #FFFFFF;color: #585858;text-align:right"><ni>{{ c.title }}</ni></a></li>   <!-- 直接显示帖子分类 -->
                     {% endfor %}
 				</ul>
-			</div></br>
+			</div>
 <!--             {% if category %}
 			    <a class="dropdown-button js-tab" href="#" data-related=".js-categories-content" style="margin-left:5%">{{ category.title }} <i class="fa fa-chevron-down"></i></a> (请触摸选择分类)
 			{% else %}
                 <a class="dropdown-button js-tab" href="#" data-related=".js-categories-content" style="margin-left:5%">{% trans "All Categories" %} <i class="fa fa-chevron-down"></i></a>   (请触摸选择分类)
             {% endif %} -->
 
-			<div class="tab-content js-tab-content js-categories-content">
-				<ul class="menu">
-                    {% for c in categories %}
-                        <li><a class="menu-link" href="{{ c.get_absolute_url }}" style="margin-left:3%">{{ c.title }}</a></li>
-                    {% endfor %}
-                    {% if category.parent %}
-                        <li><a class="menu-link" href="{{ category.parent.get_absolute_url }}" style="margin-left:3%">{% trans "All Subcategories" %}</a></li>
-                    {% else %}
-                        <li><a class="menu-link" href="{% url "spirit:topic:index-active" %}" style="margin-left:3%">{% trans "All Categories" %}</a></li>
-                    {% endif %}
-				</ul>
-			</div>
-		</div>
-
-        <div class="new-topic">
-            {% if category %}
-                <a class="button" href="{% url "spirit:topic:publish" category.pk %}" style="background-color: #f5a623; border-radius: 16px; width: 70%;margin-left: 15%;">{% trans "Create Topic" %}  </a>
-            {% else %}
-                <a class="button" href="{% url "spirit:topic:publish" %}" style="background-color: #f5a623; border-radius: 16px; width: 90%;margin-left: 5%;">{% trans "Create Topic" %}</a>
-            {% endif %}
-		</div>
+			<!--<div class="tab-content js-tab-content js-categories-content">-->
+				<!--<ul class="menu">-->
+                    <!--{% for c in categories %}-->
+                        <!--<li><a class="menu-link" href="{{ c.get_absolute_url }}" style="margin-left:3%">{{ c.title }}</a></li>-->
+                    <!--{% endfor %}-->
+                    <!--{% if category.parent %}-->
+                        <!--<li><a class="menu-link" href="{{ category.parent.get_absolute_url }}" style="margin-left:3%">{% trans "All Subcategories" %}</a></li>-->
+                    <!--{% else %}-->
+                        <!--<li><a class="menu-link" href="{% url "spirit:topic:index-active" %}" style="margin-left:3%">{% trans "All Categories" %}</a></li>-->
+                    <!--{% endif %}-->
+				<!--</ul>-->
+			<!--</div>-->
 	</div>
+
+    <script>
+        $(document).ready(function(){
+        $("#classficaton").click(function(){
+        console.log("你好");
+        console.log($(this));
+        $(this).attr("color","red");
+        })
+
+        })
+    </script>

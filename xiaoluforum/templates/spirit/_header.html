@@ -2,42 +2,39 @@
 
     <header class="header js-tabs-container">
 
-	<a  href="{% url "spirit:index" %}" style="margin-left:12px "><button style="background-color: #f5a623;border-radius: 16px;padding: 4px 12px;margin-top: 12px;color: black;">主页</button></a>
+	<!--<a  href="{% url "spirit:index" %}" style="margin-left:50%;margin-right:50% "><button style="background-color: #f5a623;border-radius: 16px;padding: 4px 12px;margin-top: 12px;color: black;">主页</button></a>-->
 
         {% if user.is_authenticated %}
             {% has_topic_notifications user as has_notifications %}
-
-            <ul class="header-tabs" style="margin-right:10%">
-                <li><a class="header-tab-link js-tab" href="{% url "spirit:search:search" %}" data-related=".js-search-content"><i class="fa fa-search"></i></a></li><!--
-             --><li><a class="header-tab-link js-tab-notification{% if has_notifications %} is-highlighted{% endif %}" href="{% url "spirit:topic:notification:index" %}" data-related=".js-notifications-content"><i class="fa fa-bell" style="color: black;"></i></a></li><!--
-             --><li><a class="header-tab-link js-tab" href="{% url "spirit:user:menu" %}" data-related=".js-user-content" style="color: black;">{{ user.first_name }} <i class="fa fa-chevron-down"></i></a></li>
-            </ul>
+            <div style="margin-top:12px;">
+                <i onclick="window.history.go(-1)" class="fa fa-chevron-left" style="color:#f5a623;font-size:20px;font-weight:10; margin-left:10px"></i>
+                <a class="header-tab-link js-tab" href="{% url "spirit:user:menu" %}" data-related=".js-user-content" style="margin-left:20%;margin-right:1%;color: black;font-size:18px; margin-top:12px;padding-top:10%">{{ user.first_name }}<i class="fa fa-chevron-down" style="color:#f5a623;font-size:20px;font-weight:10; margin-left:10px"></i></a>
+                <a class="header-tab-link js-tab-notification{% if has_notifications %} is-highlighted{% endif %}" style="float:right;display:inline" href="{% url "spirit:topic:notification:index" %}" data-related=".js-notifications-content"><i class="fa fa-bell" style="color: black; margin-right:10px;font-size:25px;color:#f5a623;"></i></a>
+            </div>
+            <!--<ul class="header-tabs" style="margin-right:10%">-->
+                <!--<li><a class="header-tab-link js-tab" href="{% url "spirit:search:search" %}" data-related=".js-search-content"><i class="fa fa-search"></i></a></li>&lt;!&ndash;-->
+             <!--&ndash;&gt;<li><a class="header-tab-link js-tab-notification{% if has_notifications %} is-highlighted{% endif %}" href="{% url "spirit:topic:notification:index" %}" data-related=".js-notifications-content"><i class="fa fa-bell" style="color: black;"></i></a></li>&lt;!&ndash;-->
+             <!--&ndash;&gt;<li><a class="header-tab-link js-tab" href="{% url "spirit:user:menu" %}" data-related=".js-user-content" style="color: black;">{{ user.first_name }} <i class="fa fa-chevron-down"></i></a></li>-->
+            <!--</ul>-->
 
             <div class="header-tabs-content">
 
-                <div class="header-tab-content js-tab-content js-user-content">
-                    <nav class="header-nav">
-                        <ul class="menu">
-                            <li><a class="menu-link" href="{% url "spirit:user:detail" pk=user.pk slug=user.st.slug %}">{% trans "Profile" %}</a></li>
-                            <li><a class="menu-link" href="{% url "spirit:topic:index-active" %}">{% trans "Topics" %}</a></li>
-                            <li><a class="menu-link" href="{% url "spirit:topic:unread:index" %}">{% trans "Unread topics" %}</a></li>
-                            <li><a class="menu-link" href="{% url "spirit:topic:private:index" %}">{% trans "Private topics" %}</a></li>
+                <div class="js-tab-content js-user-content" style="display: none;opacity:0.9;">
+                    <nav class="header-nav ">
+                        <ul class="menu" style="background:#585858;margin-left:25%;margin-right:25%;margin-top:12px;padding-left:12px;padding-right:12px;position: absolute;">
+                            <li style="background:#585858;margin-left:5%;margin-right:5%;"><a style="padding-top:15px;padding-bottom:25px;font-size:18px;color:#E6E6E6;width:130px" class="menu-link" href="{% url "spirit:user:detail" pk=user.pk slug=user.st.slug %}">我的评论</a></li>
+                            <li style="background:#585858;margin-left:5%;margin-right:5%;"><a style="padding-bottom:25px;font-size:18px;color:#E6E6E6;width:130px"class="menu-link" href="{% url "spirit:topic:index-active" %}">所有主题</a></li>
+                            <li style="background:#585858;margin-left:5%;margin-right:5%;"><a style="padding-bottom:25px;font-size:18px;color:#E6E6E6;width:130px"class="menu-link" href="{% url "spirit:topic:unread:index" %}">未读主题</a></li>
 
                             {% if user.st.is_administrator %}
                                 <li><a class="menu-link" href="{% url "spirit:admin:index" %}">{% trans "Admin" %}</a></li>
+                                <li><a class="menu-link js-post" href="{% url "spirit:user:auth:logout" %}?next={% firstof request.get_full_path|urlencode '/' %}">{% trans "Log out" %}</a></li>
                             {% endif %}
 
-                            <li><a class="menu-link js-post" href="{% url "spirit:user:auth:logout" %}?next={% firstof request.get_full_path|urlencode '/' %}">{% trans "Log out" %}</a></li>
+
                         </ul>
                     </nav>
                 </div>
-
-                <div class="header-tab-content js-tab-content js-notifications-content"></div>
-
-                <div class="header-tab-content js-tab-content js-search-content">
-                    {% render_search_form %}
-                </div>
-
             </div>
         {% else %}
             <a class="header-link" href="{% url "xlmm_login" %}?next={% firstof request.get_full_path|urlencode '/' %}" style="margin-right:10%">{% trans "Log in" %}</a>

@@ -16,9 +16,13 @@ from spirit.comment.forms import CommentForm
 from spirit.comment.utils import comment_posted
 from spirit.comment.models import Comment
 from spirit.topic.models import Topic
+from django.db.models import Sum
 from spirit.topic.forms import TopicForm
 from spirit.topic import utils
 import datetime
+
+from .extra import *
+
 
 def detail(request, pk, slug):
 
@@ -64,6 +68,10 @@ def index_active(request):
         .order_by('-is_globally_pinned', '-last_active')\
         .select_related('category')
 
+    for topic in topics:
+        topic.like_counts = get_likes_count_by_topic(topic)
+        topic.first_comment = get_first_comment_by_topic(topic)
+
     topics = yt_paginate(
         topics,
         per_page=config.topics_per_page,
@@ -73,7 +81,7 @@ def index_active(request):
     for t in topics:
         t.last_active = t.last_active+datetime.timedelta(hours=8)
 	#strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
-        # t.last_active = t.last_active.strftime("%m-%d")
+        t.last_active = t.last_active.strftime("%Y-%m-%d")
     context = {
         'categories': categories,
         'topics': topics

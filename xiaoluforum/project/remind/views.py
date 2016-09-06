@@ -20,7 +20,6 @@ from spirit.topic.notification.forms import NotificationForm, NotificationCreati
 
 @login_required
 def index_ajax(request):
-    print "daole "
     if not request.is_ajax():
         return Http404()
 

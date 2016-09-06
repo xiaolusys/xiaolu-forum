@@ -22,11 +22,14 @@
     $( document ).ready(function() {
             <!--在点击发布的时候,如果有图片,就把图片链接上传到text里面,这样才能存入后台数据库-->
             $('#ry').click(function(){
+            id_comment_content = $("#id_comment").val();
+            <!--console.log(id_comment_content);-->
              var files = $('#files').uploader('getData');
              <!--console.log(files);-->
              if(files.length != 0){
              <!--console.log("有图片")-->
-             $("#id_comment").text(files);
+             $("#id_comment").text(files+id_comment_content);
+              <!--console.log(files+"\n"+id_comment_content);-->
              }
              })
         $( ".reply" ).find( "textarea" ).store( "comment-thread-{{ topic_id }}" );
