@@ -19,7 +19,10 @@ def get_first_comment_by_topic(topic):
     comments = Comment.objects \
         .for_topic(topic=topic) \
         .order_by('date')
-    return comments.first().comment
+    comments = comments.first().comment
+    if len(comments)>60:
+        comments = comments[0:60]+"......"
+    return comments
 
 #获得所有topic喜欢的数目
 def get_likes_count_by_topics(topics):
