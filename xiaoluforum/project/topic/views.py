@@ -60,6 +60,7 @@ def index_active(request):
     categories = Category.objects\
         .visible()\
         .parents()
+    cat = get_topic_by_mysort(*categories)
 
     topics = Topic.objects\
         .visible()\
@@ -83,7 +84,7 @@ def index_active(request):
 	#strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
         t.last_active = t.last_active.strftime("%Y-%m-%d")
     context = {
-        'categories': categories,
+        'categories': cat,
         'topics': topics
     }
 

@@ -19,6 +19,7 @@ def detail(request, pk, slug):
     categories = Category.objects\
         .visible()\
         .parents()
+    cat = get_topic_by_mysort(*categories)
     category = get_object_or_404(Category.objects.visible(),
                                  pk=pk)
 
@@ -53,7 +54,7 @@ def detail(request, pk, slug):
     )
 
     context = {
-        'topcategories':categories,       #在渲染一个帖子分类的时候,显示所有的帖子分类,原来的情况是如果选了一个帖子分类,其他的帖子分类不会显示
+        'topcategories':cat,       #在渲染一个帖子分类的时候,显示所有的帖子分类,原来的情况是如果选了一个帖子分类,其他的帖子分类不会显示
         'category': category,
         'subcategories': subcategories,
         'topics': topics
