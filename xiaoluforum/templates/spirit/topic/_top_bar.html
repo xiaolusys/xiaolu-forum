@@ -12,7 +12,7 @@ ni:active {color:#f5a623;}  /* 正在被点击的链接 */
 				<ul style="width:100%; background-color: #F2F2F2;">
                         <li  style="border-top: 1px solid #F2F2F2;border-bottom: 1px solid #F2F2F2;display:inline;float:left;width:20%"><a id="classficaton" class="menu-link" href="/" style="font-size:90%;font-weight:50;padding-top: 20px;padding-bottom: 20px;background-color: #FFFFFF;color: #585858;text-align:left"><ni>全部</ni></a></li>
                     {% for c in categories %}
-                        <li style="border-top: 1px solid #F2F2F2;border-bottom: 1px solid #F2F2F2;display:inline;float:left;width:26.66%"><a class="menu-link" href="{{ c.get_absolute_url }}" style="font-size:90%;font-weight:50;padding-top: 20px;padding-bottom: 20px;background-color: #FFFFFF;color: #585858;text-align:right"><ni>{{ c.title }}</ni></a></li>   <!-- 直接显示帖子分类 -->
+                            <li style="border-top: 1px solid #F2F2F2;border-bottom: 1px solid #F2F2F2;display:inline;float:left;width:26.66%"><a class="menu-link" href="{{ c.get_absolute_url }}" style="font-size:90%;font-weight:50;padding-top: 20px;padding-bottom: 20px;background-color: #FFFFFF;color: #585858;text-align:right"><ni>{{ c.title }}</ni></a></li>   <!-- 直接显示帖子分类 -->
                     {% endfor %}
                     {% for c in topcategories %}
                         <li style="border-top: 1px solid #F2F2F2;border-bottom: 1px solid #F2F2F2;display:inline;float:left;width:26.66%"><a class="menu-link" href="{{ c.get_absolute_url }}" style="font-size:90%;font-weight:50;padding-top: 20px;padding-bottom: 20px;background-color: #FFFFFF;color: #585858;text-align:right"><ni>{{ c.title }}</ni></a></li>   <!-- 直接显示帖子分类 -->

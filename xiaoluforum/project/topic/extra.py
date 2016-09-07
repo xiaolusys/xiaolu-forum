@@ -35,3 +35,11 @@ def get_likes_count_by_topics(topics):
 def get_first_comment_by_topics(topics):
     for topic in topics:
         topic.first_comment = get_first_comment_by_topic(topic)
+
+
+def get_topic_by_mysort(*categories):
+    cat = []
+    cat.append(categories[2])
+    cat.append(categories[1])
+    cat.append(categories[0])
+    return cat
