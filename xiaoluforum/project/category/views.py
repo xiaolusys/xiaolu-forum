@@ -34,13 +34,15 @@ def detail(request, pk, slug):
         .unremoved()\
         .with_bookmarks(user=request.user)\
         .for_category(category=category)\
-        .order_by('-is_globally_pinned', '-is_pinned', '-last_active')\
+        .order_by('-is_globally_pinned', '-is_pinned', '-date')\
         .select_related('category')
 
     for i in topics:
         i.last_active = i.last_active + datetime.timedelta(hours=8)
         # strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
         i.last_active = i.last_active.strftime("%Y-%m-%d")
+        i.date = i.date + datetime.timedelta(hours=8)
+        i.date = i.date.strftime("%Y-%m-%d")
 
     for topic in topics:
         topic.like_counts = get_likes_count_by_topic(topic)
