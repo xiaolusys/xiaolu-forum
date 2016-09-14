@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponsePermanentRedirect,HttpResponse
 
 from djconfig import config
 
@@ -66,7 +66,7 @@ def index_active(request):
         .visible()\
         .global_()\
         .with_bookmarks(user=request.user)\
-        .order_by('-is_globally_pinned', '-last_active')\
+        .order_by('-is_globally_pinned', '-date')\
         .select_related('category')
 
     for topic in topics:
@@ -83,9 +83,15 @@ def index_active(request):
         t.last_active = t.last_active+datetime.timedelta(hours=8)
 	#strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
         t.last_active = t.last_active.strftime("%Y-%m-%d")
+        t.date = t.date + datetime.timedelta(hours=8)
+        t.date = t.date.strftime("%Y-%m-%d")
+        print t.date
     context = {
         'categories': cat,
         'topics': topics
     }
-
+    for c in categories:
+        if c.title == "活动通知":
+            return redirect(c.get_absolute_url())
     return render(request, 'spirit/topic/active.html', context)
+
