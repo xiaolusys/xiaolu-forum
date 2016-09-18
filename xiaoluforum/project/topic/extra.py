@@ -20,7 +20,7 @@ def get_first_comment_by_topic(topic):
         .for_topic(topic=topic) \
         .order_by('date')
     comments = comments.first().comment
-    if comments.startswith('http'):
+    if comments.find('http') != -1:
         comments = comments[0:20]+"......"
     if len(comments)>50:
         comments = comments[0:50]+"......"
