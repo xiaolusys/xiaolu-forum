@@ -14,7 +14,6 @@
 		<div class="comment{% if c.action %} is-highlighted{% endif %}" style="margin-bottom:0px;border-bottom:10px solid #F2F2F2; border-top:#F2F2F2 1px solid" id="c{{forloop.counter0|add:comments.start_index }}" data-number="{{ forloop.counter0|add:comments.start_index }}" data-pk="{{ c.pk }}">
 
             {% if not c.is_removed %}
-
                 <div class="comment-media">
                     <div class="comment-img">
                             {% get_social_accounts c.user as accounts %}    <!-- 获取每个用户的extra_data头像 -->
@@ -55,6 +54,7 @@
                     <ul class="comment-actions">
                         {% if user.is_authenticated %}
                             {% if user.st.is_moderator %}
+                                <li><a href="{% url "user:ban" pk=c.user_id comment_id=c.id%}"><i class="fa fa-ban" aria-hidden="true"></i>禁言</a></li>
                                 <li><a href="{% url "spirit:comment:delete" c.pk %}"><i class="fa fa-times"></i> {% trans "delete" %}</a></li>
                             {% endif %}
 
