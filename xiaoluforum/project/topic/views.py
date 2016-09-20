@@ -19,6 +19,7 @@ from spirit.topic.models import Topic
 from django.db.models import Sum
 from spirit.topic.forms import TopicForm
 from spirit.topic import utils
+from project.user.models import BanUser
 import datetime
 
 from .extra import *
@@ -43,10 +44,15 @@ def detail(request, pk, slug):
         per_page=config.comments_per_page,
         page_number=request.GET.get('page', 1)
     )
+
     for c in comments:
+        # bu = BanUser.objects.filter(user=c.user).first()
+        # if bu:
+        #     print bu.is_baned
         c.date = c.date+datetime.timedelta(hours=8)
 	#strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
         c.date = c.date.strftime("%m-%d")
+
 
     context = {
         'topic': topic,
