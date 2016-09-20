@@ -6,10 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth import get_user_model, update_session_auth_hash
+from models import BanUser
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.utils.translation import ugettext as _
-from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponsePermanentRedirect,HttpResponse
 
 from djconfig import config
 
@@ -18,9 +19,11 @@ from spirit.user.utils.email import send_email_change_email
 from spirit.user.utils.tokens import UserEmailChangeTokenGenerator
 from spirit.topic.models import Topic
 from spirit.comment.models import Comment
+from spirit.topic.models import Topic
 from spirit.user.forms import UserProfileForm, EmailChangeForm, UserForm, EmailCheckForm
 import datetime
 User = get_user_model()
+
 
 @login_required
 def _activity(request, pk, slug, queryset, template, reverse_to, context_name, per_page):
@@ -42,6 +45,23 @@ def _activity(request, pk, slug, queryset, template, reverse_to, context_name, p
     }
 
     return render(request, template, context)
+
+@login_required
+def ban_user(request,pk,comment_id):
+    user = User.objects.filter(id=pk).first()
+    ban_user_info = {
+        'user' : user,
+        'username': user.username,
+        "first_name":user.first_name,
+        "days": 7,
+        "is_baned": True
+    }
+
+    if not BanUser.objects.filter(user=user).first():
+        BanUser.objects.create(**ban_user_info)
+    Comment.objects.filter(user=user).update(is_removed=True)
+    comment = Comment.objects.filter(id = comment_id).first()
+    return redirect(comment.get_absolute_url())
 
 
 def comments(request, pk, slug):

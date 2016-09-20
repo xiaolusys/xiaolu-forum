@@ -8,6 +8,7 @@ import project.comment.history.urls
 from . import views
 
 urlpatterns = [
+    url(r'^(?P<topic_id>\d+)/publish/$', views.publish, name='publish'),
     url(r'^history/', include(project.comment.history.urls, namespace='history')),
     url(r'^(?P<topic_id>\d+)/publish/(?P<pk>\d+)/quote/$', views.publish, name='publish'),
     # url(r'^upload/$', views.image_upload_ajax, name='image-upload-ajax'),
