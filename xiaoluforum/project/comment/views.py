@@ -40,8 +40,10 @@ def push_by_xiaolusys(login_url,push_url,admin_info,push_info):
 @login_required
 @ratelimit(rate='1/10s')
 def publish(request, topic_id, pk=None):
-    if BanUser.objects.filter(user = request.user).is_baned:
-        return redirect("/topic/index")
+    bu = BanUser.objects.filter(user = request.user).first()
+    if bu:
+        if bu.is_baned:
+            return redirect("/topic/index")
     topic = get_object_or_404(
         Topic.objects.opened().for_access(request.user),
         pk=topic_id
