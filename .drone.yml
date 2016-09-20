@@ -5,9 +5,18 @@ build:
   commands:
     - mkdir -p /data/log/django; pip install raven==5.13.0 -i http://mirrors.aliyun.com/pypi/simple
     - cd xiaoluforum; python manage.py migrate --noinput
-    #- python manage.py test -t . --keepdb
+#    - python manage.py test -t . --keepdb
   when:
     branch: [staging]
+build:
+  image: registry.aliyuncs.com/xiaolu-img/xiaolusys-base:forum
+  environment:
+    - TARGET=production
+  commands:
+    - mkdir -p /data/log/django; pip install raven==5.13.0 -i http://mirrors.aliyun.com/pypi/simple
+    - cd xiaoluforum; python manage.py migrate --noinput
+  when:
+    branch: [master]
 publish:
   docker:
     username: $$DOCKER_USERNAME
