@@ -12,7 +12,6 @@
 <!--如果访问者是管理员,或者评论状态只有为0,也就是不显示置顶的评论才能看-->
 <div>
 		<div class="comment{% if c.action %} is-highlighted{% endif %}" style="margin-bottom:0px;border-bottom:10px solid #F2F2F2; border-top:#F2F2F2 1px solid" id="c{{forloop.counter0|add:comments.start_index }}" data-number="{{ forloop.counter0|add:comments.start_index }}" data-pk="{{ c.pk }}">
-
             {% if not c.is_removed %}
                 <div class="comment-media">
                     <div class="comment-img">

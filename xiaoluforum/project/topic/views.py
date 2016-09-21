@@ -26,7 +26,7 @@ from .extra import *
 
 
 def detail(request, pk, slug):
-
+    bu = BanUser.objects.filter(user=request.user).first()
     topic = Topic.objects.get_public_or_404(pk, request.user)
     
     if topic.slug != slug:
@@ -46,13 +46,11 @@ def detail(request, pk, slug):
     )
 
     for c in comments:
-        # bu = BanUser.objects.filter(user=c.user).first()
-        # if bu:
-        #     print bu.is_baned
+        if bu and bu.is_baned and c.user == request.user:
+            c.is_removed = 0
         c.date = c.date+datetime.timedelta(hours=8)
 	#strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
         c.date = c.date.strftime("%m-%d")
-
 
     context = {
         'topic': topic,
