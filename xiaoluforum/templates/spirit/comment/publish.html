@@ -1,21 +1,25 @@
+{% extends "spirit/_base.html" %}
+
 {% load i18n %}
 
-<form action="{% url "spirit:comment:publish" topic_id %}" method="post" class="js-reply">
-    {% csrf_token %}
-    {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+{% block title %}{% trans "Publish comment" %}{% endblock %}
 
-    {{ form.non_field_errors }}
+{% block content %}
 
-    {% for field in form %}
-        {{ field.errors }}
-        {{ field }}
-    {% endfor %}
+    <h1 class="headline">{% trans "Publishing comment on" %} "{{ topic.title }}"</h1>
+    
+    <form action="." method="post" class="js-reply">
+        {% csrf_token %}
+        {% include "spirit/_form.html" %}
 
-    <div class="container">
-        {% include "spirit/comment/_editor.html" with user=user%}
-        <input id="ry" class="button reply-button" type="submit" value="{% trans "Publish" %}"  style="background-color: #f5a623;border-radius: 16px;" />
-    </div>
-</form>
+        <div class="container">
+            {% include "spirit/comment/_editor.html" %}
+
+            <input id="ry" class="button reply-button" type="submit" value="{% trans "Publish" %}" style="background-color: #f5a623; border-radius: 16px; width: 90%;margin-left: 5%;"/>
+        </div>
+    </form>
+
+
 
 
 <script>
@@ -40,3 +44,4 @@
 
 	});
 </script>
+{% endblock %}
