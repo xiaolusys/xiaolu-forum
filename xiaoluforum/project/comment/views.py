@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib import messages
-from django.http import Http404
+from django.http import Http404,HttpResponse
 
 from djconfig import config
 
@@ -20,6 +20,7 @@ from .forms import CommentImageForm
 from spirit.comment.utils import comment_posted, post_comment_update, pre_comment_update
 import requests
 import threading
+import json
 
 from django.conf import settings
 
@@ -38,7 +39,7 @@ def push_by_xiaolusys(login_url,push_url,admin_info,push_info):
 
 
 @login_required
-@ratelimit(rate='1/10s')
+@ratelimit(rate='10/10s')
 def publish(request, topic_id, pk=None):
     topic = get_object_or_404(
         Topic.objects.opened().for_access(request.user),
@@ -169,3 +170,12 @@ def image_upload_ajax(request):
         return json_response({'url': image.url, })
 
     return json_response({'error': dict(form.errors.items()), })
+
+@login_required
+def get_signature(request):
+    username = "dev.huideng"
+    password = "yduk9s71"
+    url = "http://admin.xiaolumm.com/rest/v1/share/weixin_signs?referer=www.baidu.com"
+    result = requests.get(url=url,auth=(username,password))
+    return HttpResponse(result, status=200)
+
