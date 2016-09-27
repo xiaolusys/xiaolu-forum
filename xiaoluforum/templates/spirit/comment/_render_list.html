@@ -60,7 +60,7 @@
                             <!--<li><a href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a></li>-->
                         {% endif %}
 
-                        <!--<li><a class="js-share" href="#" data-dialog=".js-share-{{ c.pk }}"><i class="fa fa-share"></i> {% trans "share" %}</a></li>-->
+                        <!--<li><a  id= "share"><i class="fa fa-share"></i> {% trans "share" %}</a></li>-->
                         <!--删除分享链接-->
 
                         {% if user.is_authenticated %}
@@ -143,7 +143,6 @@
 
 
     <script>
-
 	$( document ).ready(function() {
 
         {% if user.is_authenticated %}
@@ -159,5 +158,59 @@
         hljs.initHighlightingOnLoad();
 
 	});
+
+	$("#share").click(function(){
+	    $.ajax({
+	    url:'/comment/weixin/get_signature/',
+	    success:function(res){
+	    res = JSON.parse(res);
+
+	    wx.config({
+	    debug: true,
+	    appId: res["app_id"],
+	    timestamp: res["timestamp"],
+	    nonceStr: res["noncestr"],
+	    signature: res["signature"],
+	    jsApiList: ['onMenuShareQQ','onMenuShareQZone','onMenuShareTimeline']
+	    });
+                 }
+                });
+
+        wx.ready(function(){
+        wx.onMenuShareTimeline({
+        title:"醉了",
+        link:"www.baidu.com",
+        success: function(){
+        console.log("醉了");
+        },
+        cancel: function(){
+        console.log("取消了");
+        }
+        });
+    }
+            );
+
+        wx.checkJsApi({
+            jsApiList: ['onMenuShareTimeline'],
+            success: function(res){
+            console.log("支持");
+            },
+            error: function(res){
+            console.log("不支持");
+            }
+        });
+	    wx.onMenuShareTimeline({
+	    title:"醉了",
+	    link:"www.baidu.com",
+	    success: function(){
+	    console.log("醉了");
+	    },
+	    cancel: function(){
+	    console.log("取消了");
+	    }
+	    });
+
+	    });
+
 
 	</script>
