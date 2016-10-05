@@ -26,7 +26,7 @@ from .extra import *
 
 
 def detail(request, pk, slug):
-    bu = BanUser.objects.filter(user=request.user).first()
+    bu = BanUser.objects.filter(username=request.user).first()
     topic = Topic.objects.get_public_or_404(pk, request.user)
     
     if topic.slug != slug:
