@@ -36,6 +36,7 @@ AUTH_PROFILE_URL = '%s/rest/v1/users/profile'% AUTH_SITE_URL
 
 
 INSTALLED_APPS.extend([
+    'debug_toolbar',
 ])
 #DATABASES = {
 #    'default': {
@@ -67,9 +68,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
     # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'xiaoluforum',  # Or path to database file if using sqlite3.
-        'USER': 'xiaolufdev',  # Not used with sqlite3.\
-        'PASSWORD': 'Xiaolu_test123',  # Not used with sqlite3.
-        'HOST': 'dev.xiaolumm.com',  # Set to empty string for localhost. Not used with sqlite3.
+        'USER': 'xiaolufba',  # Not used with sqlite3.\
+        'PASSWORD': 'Xiaolu_2016forum',  # Not used with sqlite3.
+        'HOST': 'd.xiaolumm.com',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '30001',  # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'init_command': 'SET storage_engine=Innodb;',
                     'charset': 'utf8'},  # storage_engine need mysql>5.4,and table_type need mysql<5.4
@@ -82,11 +83,19 @@ DATABASES = {
 
 
 CACHES.update({
+    # 'default': {
+    #     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    # },
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': '192.168.1.102:6379',
+        'OPTIONS': {
+            'DB': 11,
+            # 'PARSER_CLASS': 'redis.connection.HiredisParser',
+        }
     },
     'st_rate_limit': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'redis_cache.RedisCache',
         'LOCATION': 'spirit_rl_cache',
         'TIMEOUT': None
     }
@@ -100,6 +109,27 @@ RAVEN_CONFIG = {
     # release based on the git info.
     'release': raven.fetch_git_sha(os.path.dirname(BASE_DIR)),
 }
+
+##################################################################
+INTERNAL_IPS = ('127.0.0.1',)
+DEBUG_TOOLBAR_PANELS = [
+    'debug_toolbar.panels.versions.VersionsPanel',
+    'debug_toolbar.panels.timer.TimerPanel',
+    # 'debug_toolbar.panels.settings.SettingsPanel',
+    # 'debug_toolbar.panels.headers.HeadersPanel',
+    'debug_toolbar.panels.request.RequestPanel',
+    'debug_toolbar.panels.sql.SQLPanel',
+    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+    # 'debug_toolbar.panels.templates.TemplatesPanel',
+    'debug_toolbar.panels.cache.CachePanel',
+    'debug_toolbar.panels.signals.SignalsPanel',
+    # 'debug_toolbar.panels.logging.LoggingPanel',
+    # 'debug_toolbar.panels.redirects.RedirectsPanel',
+]
+MIDDLEWARE_CLASSES = (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'core.middleware.middleware.ProfileMiddleware',
+    ) + tuple(MIDDLEWARE_CLASSES)
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.MD5PasswordHasher',

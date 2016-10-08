@@ -59,62 +59,18 @@ def detail(request, pk, slug):
 
     return render(request, 'spirit/topic/detail.html', context)
 
-
-def index_active(request):
-    categories = Category.objects\
-        .visible()\
-        .parents()
-    cat = get_topic_by_mysort(*categories)
-
-    topics = Topic.objects\
-        .visible()\
-        .global_()\
-        .with_bookmarks(user=request.user)\
-        .order_by('-is_globally_pinned', '-date')\
-        .select_related('category')
-
-    for topic in topics:
-        topic.like_counts = get_likes_count_by_topic(topic)
-        topic.first_comment = get_first_comment_by_topic(topic)
-
-    topics = yt_paginate(
-        topics,
-        per_page=config.topics_per_page,
-        page_number=request.GET.get('page', 1)
-    )
-
-    for t in topics:
-        t.last_active = t.last_active+datetime.timedelta(hours=8)
-	#strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
-        t.last_active = t.last_active.strftime("%Y-%m-%d")
-        t.date = t.date + datetime.timedelta(hours=8)
-        t.date = t.date.strftime("%Y-%m-%d")
-        print t.date
-    context = {
-        'categories': cat,
-        'topics': topics
-    }
-    for c in categories:
-        if c.title == "活动通知":
-            return redirect(c.get_absolute_url())
-    return render(request, 'spirit/topic/active.html', context)
-
 def index(request):
     categories = Category.objects\
         .visible()\
         .parents()
     cat = get_topic_by_mysort(*categories)
 
-    topics = Topic.objects\
-        .visible()\
-        .global_()\
-        .with_bookmarks(user=request.user)\
-        .order_by('-is_globally_pinned', '-date')\
+    topics = Topic.objects \
+        .visible() \
+        .global_() \
+        .with_bookmarks(user=request.user) \
+        .order_by('-is_globally_pinned', '-date') \
         .select_related('category')
-
-    for topic in topics:
-        topic.like_counts = get_likes_count_by_topic(topic)
-        topic.first_comment = get_first_comment_by_topic(topic)
 
     topics = yt_paginate(
         topics,
@@ -122,15 +78,30 @@ def index(request):
         page_number=request.GET.get('page', 1)
     )
 
+    topics = fill_likes_count_and_first_comment_by_topics(topics)
+
     for t in topics:
-        t.last_active = t.last_active+datetime.timedelta(hours=8)
-	#strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
+        t.last_active = t.last_active + datetime.timedelta(hours=8)
+        # strdatetime = now.strftime("%Y-%m-%d %H:%M:%S")
         t.last_active = t.last_active.strftime("%Y-%m-%d")
         t.date = t.date + datetime.timedelta(hours=8)
         t.date = t.date.strftime("%Y-%m-%d")
-        print t.date
+
     context = {
         'categories': cat,
         'topics': topics
     }
     return render(request, 'spirit/topic/active.html', context)
+
+
+def index_active(request):
+    categories = Category.objects\
+        .visible()\
+        .parents()
+    for c in categories:
+        if c.title == "活动通知":
+            # return HttpResponse('<html><head><title>test</title></head><body>success</body></html>')
+            return redirect(c.get_absolute_url())
+
+    return index(request)
+

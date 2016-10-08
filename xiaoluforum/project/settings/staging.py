@@ -69,11 +69,28 @@ DATABASES = {
 
 
 CACHES.update({
+    # 'default': {
+    #     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    # },
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'rdsvrl2p9pu6536n7d99.mysql.rds.aliyuncs.com',
+        'OPTIONS': {
+            'DB': 12,
+            'PASSWORD': '55a32ec47c8d41f7:Huyiinc12345',
+            "SOCKET_CONNECT_TIMEOUT": 5,  # in seconds
+            "SOCKET_TIMEOUT": 5,  # in seconds
+            # 'PARSER_CLASS': 'redis.connection.HiredisParser',
+            'PICKLE_VERSION': 2,
+            # 'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+            'CONNECTION_POOL_CLASS_KWARGS': {
+                'max_connections': 50,
+                # 'timeout': 10,
+            }
+        }
     },
     'st_rate_limit': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'redis_cache.RedisCache',
         'LOCATION': 'spirit_rl_cache',
         'TIMEOUT': 20
     }
