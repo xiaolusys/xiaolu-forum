@@ -58,10 +58,11 @@ deploy:
       - docker run --name=gunicorn-forum --restart=always -e TARGET=production --volumes-from=static -d
         -p `ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`:9003:9000 -e BLUEWARE_CONFIG_FILE=blueware.ini
         registry.aliyuncs.com/xiaolu-img/xiaolusys:forum blueware-admin run-program
-        gunicorn -k gevent -c project/gunicorn_conf.py project.wsgi
+        gunicorn -k gevent -w 2 -c project/gunicorn_conf.py project.wsgi
   ssh:
     host:
       - sale2.xiaolumm.com
+      - sale8.xiaolumm.com
     user: root
     when:
       branch: master
@@ -70,4 +71,5 @@ deploy:
       - docker rm -f gunicorn-forum
       - docker run --name=gunicorn-forum --restart=always -e TARGET=production --volumes-from=static -d
         -p `ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`:9003:9000 -e BLUEWARE_CONFIG_FILE=blueware.ini
-        registry.aliyuncs.com/xiaolu-img/xiaolusys:forum blueware-admin run-program gunicorn -k gevent -c project/gunicorn_conf.py project.wsgi
+        registry.aliyuncs.com/xiaolu-img/xiaolusys:forum blueware-admin run-program
+        gunicorn -k gevent -w 4 -c project/gunicorn_conf.py project.wsgi
