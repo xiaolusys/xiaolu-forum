@@ -90,7 +90,7 @@ CACHES.update({
         }
     },
     'st_rate_limit': {
-        'BACKEND': 'redis_cache.RedisCache',
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'spirit_rl_cache',
         'TIMEOUT': 20
     }
