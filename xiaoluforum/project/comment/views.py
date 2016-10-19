@@ -39,7 +39,7 @@ def push_by_xiaolusys(login_url,push_url,admin_info,push_info):
 
 
 @login_required
-@ratelimit(rate='10/10s')
+@ratelimit()
 def publish(request, topic_id, pk=None):
     topic = get_object_or_404(
         Topic.objects.opened().for_access(request.user),
@@ -53,6 +53,20 @@ def publish(request, topic_id, pk=None):
             comment = form.save()
             comment_posted(comment=comment, mentions=form.mentions)
             Comment.objects.for_access(user=request.user)
+            comment_da = comment.comment
+            if comment_da.find("JPG")!=-1 or comment_da.find("PNG")!=-1:
+                comment_da = comment_da.strip()
+                comment_da = comment_da.split('\r')[0]   #获取url图片链接
+                comment_img = '<p><img src="%s"></p>'
+                comment_img = comment_img % comment_da   #把图片链接放入<imag >中
+                href_url = comment.comment_html.split("</a><br>")[0] #获取数据库中图片是链接<a>不是<image>的字符串
+                # print comment.comment_html
+                # print href_url
+                # print comment.comment_html.find(href_url)
+                comment_word = comment.comment_html.replace(href_url,comment_img.split('</p>')[0]) #用<img>替换<a>
+                comment.comment_html = comment_word
+                comment.save()
+                # print comment.comment_html
             if banuser and banuser.is_baned:
                 comment.is_removed = 1
                 comment.save()
