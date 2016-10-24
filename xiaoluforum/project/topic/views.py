@@ -23,7 +23,9 @@ from project.user.models import BanUser
 import datetime
 
 from .extra import *
+import logging
 
+logger = logging.getLogger(__name__)
 
 def detail(request, pk, slug):
     bu = BanUser.objects.filter(username=request.user).first()
@@ -105,3 +107,43 @@ def index_active(request):
 
     return index(request)
 
+@login_required
+@ratelimit(rate='1/10s')
+def publish(request, category_id=None):
+    title = request.POST.get("title",'')
+    comment = request.POST.get("comment",'')
+    title = not title.isspace()          #如果里面全是空格,不允许通过
+    comment = not comment.isspace()
+
+    # logger.warn({"action":"publish_topic", "title_comment_info":title+comment})
+    # topic = Topic()
+    # if not all([title,comment]):
+    #     return HttpResponse(123)
+
+    if category_id:
+        get_object_or_404(Category.objects.visible(),
+                          pk=category_id)
+
+    if request.method == 'POST':
+        form = TopicForm(user=request.user, data=request.POST)
+        cform = CommentForm(user=request.user, data=request.POST)
+
+        if not request.is_limited and all([form.is_valid(), cform.is_valid()]) and all([title,comment]):  # TODO: test!
+            # wrap in transaction.atomic?
+
+            topic = form.save()
+            cform.topic = topic
+            comment = cform.save()
+            comment_posted(comment=comment, mentions=cform.mentions)
+            return redirect(topic.get_absolute_url())
+    else:
+        category_id = 2  #七嘴八舌为默认选择分类
+        form = TopicForm(user=request.user, initial={'category': category_id, })
+        cform = CommentForm()
+
+    context = {
+        'form': form,
+        'cform': cform
+    }
+
+    return render(request, 'spirit/topic/publish.html', context)
