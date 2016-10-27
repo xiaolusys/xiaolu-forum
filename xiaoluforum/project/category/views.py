@@ -36,6 +36,9 @@ def detail(request, pk, slug):
         .for_category(category=category)\
         .order_by('-is_globally_pinned', '-is_pinned', '-date')\
         .select_related('category')
+    
+    topics_true = [i for i in topics if not i.is_removed]
+    topics = topics_true
 
     topics = yt_paginate(
         topics,
