@@ -137,6 +137,10 @@ def publish(request, category_id=None):
             # wrap in transaction.atomic?
 
             topic = form.save()
+            bu = BanUser.objects.filter(username=request.user).first()
+            if bu and bu.is_baned and topic.user == request.user:
+                topic.is_removed = True
+                topic.save()
             cform.topic = topic
             comment = cform.save()
             comment_posted(comment=comment, mentions=cform.mentions)
