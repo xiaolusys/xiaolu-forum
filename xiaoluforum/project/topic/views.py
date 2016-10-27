@@ -74,6 +74,11 @@ def index(request):
         .order_by('-is_globally_pinned', '-date') \
         .select_related('category')
 
+
+    topics_true = [i for i in topics if not i.is_removed]
+    topics = topics_true
+
+
     topics = yt_paginate(
         topics,
         per_page=config.topics_per_page,
