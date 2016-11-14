@@ -31,8 +31,30 @@
 
         <div class="container">
             {% include "spirit/comment/_editor.html" %}
-            <input class="button reply-button" type="submit" value="{% trans "Publish" %}" style="background-color: #f5a623; border-radius: 16px; width: 90%;margin-left: 5%;" />
+            <input id="ry2" class="button reply-button" type="submit" value="{% trans "Publish" %}" style="background-color: #f5a623; border-radius: 16px; width: 90%;margin-left: 5%;" />
         </div>
     </form>
+<script>
+    $( document ).ready(function() {
+            <!--在点击发布的时候,如果有图片,就把图片链接上传到text里面,这样才能存入后台数据库-->
+            $('#ry2').click(function(){
+            console.log($("#id_comment").val());
+            id_comment_content = $("#id_comment").val();
+            <!--console.log(id_comment_content);-->
+             var files = $('#files').uploader('getData');
+             <!--console.log(files);-->
+             if(files.length != 0){
+             console.log("有图片");
+             var nm = files+"\n"+id_comment_content;
+             console.log(nm);
+             $("#id_comment").val(nm);
+             console.log(files+"\n"+id_comment_content);
+             id_comment_content = files+id_comment_content;
+             console.log($("#id_comment").val());
+             }
+             })
+        $( ".reply" ).find( "textarea" ).store( "comment-thread-{{ topic_id }}" );
 
+	});
+</script>
 {% endblock %}
