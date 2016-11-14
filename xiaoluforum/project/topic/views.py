@@ -134,7 +134,7 @@ def publish(request, category_id=None):
         cform = CommentForm(user=request.user, data=request.POST)
 
         if not request.is_limited and all([form.is_valid(), cform.is_valid()]) and all([title,comment]):  # TODO: test!
-            # wrap in transaction.atomic?
+            # wrap in transaction.atomic
 
             topic = form.save()
             bu = BanUser.objects.filter(username=request.user).first()
